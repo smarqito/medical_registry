@@ -127,3 +127,6 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+athlete/*
+index.html
+.vscode/settings.json
