@@ -15,7 +15,7 @@ class Jogador:
 
 jogadores = {}
 distPorGen = {}
-distPorIdade = {"MaisOuIgual35" : {"M" : [], "F" : []}, "Menos35" : {"M" : [], "F" : []}}~
+distPorIdade = {"MaisOuIgual35" : {"M" : [], "F" : []}, "Menos35" : {"M" : [], "F" : []}}
 resultados = {}
 distPorMorada = {}
 
