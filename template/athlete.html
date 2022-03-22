@@ -10,40 +10,50 @@
     <div class="container">
         <div class="row">
             <div class="col">
-                {{date}}
+                <label for="data">Data</label>
+                <input class="form-control" type="text" value="{{date}}" aria-label="{{date}}" readonly>
             </div>
             <div class="col">
-                {{resultado}}
+                <label for="resultado">Resultado</label>
+                <input class="form-control" type="text" value="{{resultado}}" aria-label="{{resultado}}" readonly>
             </div>
         </div>
         <div class="row">
             <div class="col-6">
-               {{primeiro}} {{ultimo}}
+                <label for="nome">Nome</label>
+               <input class="form-control" type="text" value="{{primeiro}} {{ultimo}}" aria-label="{{primeiro}} {{ultimo}}" readonly>
             </div>
             <div class="col">
-                {{genero}}
+                <label for="genero">Género</label>
+                <input class="form-control" type="text" value="{{genero}}" aria-label="{{genero}}" readonly>
             </div>
             <div class="col">
-                {{idade}}
-            </div>
-        </div>
-        <div class="row">
-            <div class="col">
-                {{morada}}
-            </div>
-            <div class="col">
-                {{email}}
+                <label for="genero">Idade</label>
+                <input class="form-control" type="text" value="{{idade}} anos" aria-label="{{idade}} anos" readonly>
             </div>
         </div>
         <div class="row">
             <div class="col">
-                {{modalidade}}
+                <label for="morada">Morada</label>
+                <input class="form-control" type="text" value="{{morada}}" aria-label="{{morada}}" readonly>
+            </div>
+            <div class="col">
+                <label for="email">Email</label>
+                <input class="form-control" type="text" value="{{email}}" aria-label="{{email}}" readonly>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <label for="modalidade">Modalidade</label>
+                <input class="form-control" type="text" value="{{modalidade}}" aria-label="{{modalidade}}" readonly>
             </div>
             <div class="col-3">
-                {{clube}}
+                <label for="clube">Clube</label>
+                <input class="form-control" type="text" value="{{clube}}" aria-label="{{clube}}" readonly>
             </div>
             <div class="col">
-                {{federado}}
+                <label for="federado">Federado</label>
+                <input class="form-control" type="text" value="{{federado}}" aria-label="{{federado}}" readonly>
             </div>
         </div>
     </div>
