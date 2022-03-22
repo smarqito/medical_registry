@@ -10,7 +10,7 @@ f = open("assets/emd.csv")
 class Jogador:
     def __init__(self, m):
         self.id = m.group("id")
-        self.nome = m.group("nome")
+        self.nome = m.group("primeiro")
         self.ultimo = m.group("ultimo")
 
 jogadores = {}
@@ -19,64 +19,6 @@ distPorIdade = {"MaisOuIgual35" : {"M" : [], "F" : []}, "Menos35" : {"M" : [], "
 resultados = {}
 distPorMorada = {}
 
-def reader():
-    inde = open("index.html", "w")
-    inde.write('<ul>')
-    for l in f.readlines():
-        data = datetime.strptime(m.group("date"), '%Y-%m-%d').date()
-        templ = open("template/athlete.html")
-        templat = templ.read()
-        m = match(reg, l)
-        if m:
-            j = Jogador(m)
-            jogadores[j.id] = j
-            gd = m.groupdict()
-            inde.write(f'<li><a href="athlete/{gd["id"]}.html">{gd["primeiro"]}, {gd["ultimo"]}</a></li>')
-            for k in gd.keys():
-                templat = sub(rf'{{{{{k}}}}}', gd[k], templat)
-            nathl = open(f'athlete/{gd["id"]}.html', 'w')
-            nathl.write(templat)
-
-            #Género
-            if not distPorGen.__contains__(data.year):
-                distPorGen[data.year] = {"M": [], "F":[]}
-
-            distPorGen[data.year][j.gen].append(j.id)
-
-            #Idade
-            if int(j.idade) >= 35:
-                distPorIdade["MaisOuIgual35"][j.gen].append(j.id)
-            else:
-                distPorIdade["Menos35"][j.gen].append(j.id)
-
-            #Morada
-            morada = j.morada
-            if not distPorMorada.__contains__(morada):
-                distPorMorada[morada] = []
-            distPorMorada[morada].append(j.id)
-
-            #Resultados
-            if not resultados.__contains__(data.year):
-                resultados[data.year] = {"aptos": [], "naoAptos":[]}
-
-            fed = j.result == "true"
-            if fed:
-                resultados[data.year]["aptos"].append(j.id)
-            else:
-                resultados[data.year]["naoAptos"].append(j.id)
-
-        templ.close()
-        
-
-    inde.write('</ul>')
-    inde.close()
-
-    generate_DistGen(distPorGen)
-    generate_IdadeGen(distPorIdade)
-    generate_Resultados(resultados)
-    generate_DistMoradas(distPorMorada)
-
-reader()
 
 def generate_DistGen(lista_anos):
     w = open("gen.html", "w")
@@ -238,3 +180,62 @@ def generate_DistMoradas(lista_moradas):
     temp = sub(r'{{rows}}', '{}'.format(body), temp)
     w.write(temp)
     w.close
+
+def reader():
+    inde = open("index.html", "w")
+    inde.write('<ul>')
+    for l in f.readlines():
+        templ = open("template/athlete.html")
+        templat = templ.read()
+        m = match(reg, l)
+        if m:
+            data = datetime.strptime(m.group("date"), '%Y-%m-%d').date()
+            j = Jogador(m)
+            jogadores[j.id] = j
+            gd = m.groupdict()
+            inde.write(f'<li><a href="athlete/{gd["id"]}.html">{gd["primeiro"]}, {gd["ultimo"]}</a></li>')
+            for k in gd.keys():
+                templat = sub(rf'{{{{{k}}}}}', gd[k], templat)
+            nathl = open(f'athlete/{gd["id"]}.html', 'w')
+            nathl.write(templat)
+
+            #Género
+            if not distPorGen.__contains__(data.year):
+                distPorGen[data.year] = {"M": [], "F":[]}
+
+            distPorGen[data.year][m.group("genero")].append(j.id)
+
+            #Idade
+            if int(m.group("idade")) >= 35:
+                distPorIdade["MaisOuIgual35"][m.group("genero")].append(j.id)
+            else:
+                distPorIdade["Menos35"][m.group("genero")].append(j.id)
+
+            #Morada
+            morada = m.group("morada")
+            if not distPorMorada.__contains__(morada):
+                distPorMorada[morada] = []
+            distPorMorada[morada].append(j.id)
+
+            #Resultados
+            if not resultados.__contains__(data.year):
+                resultados[data.year] = {"aptos": [], "naoAptos":[]}
+
+            fed = m.group("resultado") == "true"
+            if fed:
+                resultados[data.year]["aptos"].append(j.id)
+            else:
+                resultados[data.year]["naoAptos"].append(j.id)
+
+        templ.close()
+        
+
+    inde.write('</ul>')
+    inde.close()
+
+    generate_DistGen(distPorGen)
+    generate_IdadeGen(distPorIdade)
+    generate_Resultados(resultados)
+    generate_DistMoradas(distPorMorada)
+
+reader()
