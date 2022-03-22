@@ -7,12 +7,12 @@ def writeJogs(jMin, jMax, templat):
     w = open("athlete/dates.html", "w")
     for jogadorMin in jMin:
         hrefMin = "{}.html".format(jogadorMin[0])
-        tagMin = r'<div class="row"><div class="col"><a {}>{}, {}</a></div></div> \1'.format(hrefMin, jogadorMin[2], jogadorMin[1])
+        tagMin = r'<div class="row"><div class="col"><a href="{}">{}, {}</a></div></div> \1'.format(hrefMin, jogadorMin[2], jogadorMin[1])
         templat = re.sub(r'(\{\{min\}\})', tagMin, templat)
 
     for jogadorMax in jMax:
         hrefMax = "{}.html".format(jogadorMax[0])
-        tagMax = r'<div class="rotemplat"><div class="col"><a {}>{}, {}</a></div></div> \1'.format(hrefMax, jogadorMax[2], jogadorMax[1])
+        tagMax = r'<div class="row"><div class="col"><a href="{}">{}, {}</a></div></div> \1'.format(hrefMax, jogadorMax[2], jogadorMax[1])
         templat = re.sub(r'(\{\{max\}\})', tagMax, templat)
 
     templat = re.sub(r'{{min}}', "", templat)
@@ -54,7 +54,7 @@ def datesReader():
     templat = re.sub(r'dataMinima', dataMin.strftime('%Y-%m-%d'), templat)
     templat = re.sub(r'dataMaxima', dataMax.strftime('%Y-%m-%d'), templat)
 
-    writeJogs(minJ, maxJ, templat)
+    writeJogs(sorted(minJ), sorted(maxJ), templat)
 
     inde.write('</ul>')
     inde.close()
