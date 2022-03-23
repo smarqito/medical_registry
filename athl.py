@@ -19,6 +19,14 @@ distPorIdade = {"MaisOuIgual35" : {"M" : [], "F" : []}, "Menos35" : {"M" : [], "
 resultados = {}
 distPorMorada = {}
 
+def generate_Index(lista, filePath):
+    file = open(filePath, "w")
+    file.write('<ul>')
+    for m in lista:
+        file.write('<li><a href="athlete/{}.html">{}, {}</a></li>'.format(m, jogadores[m].nome, jogadores[m].ultimo))
+    file.write('</ul>')
+    file.close()
+
 
 def generate_DistGen(lista_anos):
     w = open("gen.html", "w")
@@ -26,20 +34,10 @@ def generate_DistGen(lista_anos):
     body = ''
     for membro in sorted(lista_anos):
         #Ref Masculino
-        masc = open("Genero/masc_{}.html".format(membro), "w")
-        masc.write('<ul>')
-        for m in lista_anos[membro]["M"]:
-            masc.write('<li><a href="athlete/{}.html">{}, {}</a></li>'.format(m, jogadores[m].nome, jogadores[m].ultimo))
-        masc.write('</ul>')
-        masc.close()
+        generate_Index(lista_anos[membro]["M"], "Genero/masc_{}.html".format(membro))
 
         #Ref Femenino
-        fem = open("Genero/fem_{}.html".format(membro), "w")
-        fem.write('<ul>')
-        for m in lista_anos[membro]["F"]:
-            fem.write('<li><a href="athlete/{}.html">{}, {}</a></li>'.format(m, jogadores[m].nome, jogadores[m].ultimo))
-        fem.write('</ul>')
-        fem.close()
+        generate_Index(lista_anos[membro]["F"], "Genero/fem_{}.html".format(membro))
 
         content = row.read()
         content = sub(r'{{ano}}', '{}'.format(membro), content)
@@ -61,36 +59,16 @@ def generate_DistGen(lista_anos):
 def generate_IdadeGen(lista_generos):
 
     #Ref Masculino >=35
-    masc = open("Idade/mais35Masc.html", "w")
-    masc.write('<ul>')
-    for m in lista_generos["MaisOuIgual35"]["M"]:
-        masc.write('<li><a href="athlete/{}.html">{}, {}</a></li>'.format(m, jogadores[m].nome, jogadores[m].ultimo))
-    masc.write('</ul>')
-    masc.close()
+    generate_Index(lista_generos["MaisOuIgual35"]["M"], "Idade/mais35Masc.html")
 
     #Ref Masculino < 35
-    masc = open("Idade/menos35Masc.html", "w")
-    masc.write('<ul>')
-    for m in lista_generos["Menos35"]["M"]:
-        masc.write('<li><a href="athlete/{}.html">{}, {}</a></li>'.format(m, jogadores[m].nome, jogadores[m].ultimo))
-    masc.write('</ul>')
-    masc.close()
+    generate_Index(lista_generos["Menos35"]["M"], "Idade/menos35Masc.html")
 
     #Ref Feminino >=35
-    fem = open("Idade/mais35Fem.html", "w")
-    fem.write('<ul>')
-    for m in lista_generos["MaisOuIgual35"]["F"]:
-        fem.write('<li><a href="athlete/{}.html">{}, {}</a></li>'.format(m, jogadores[m].nome, jogadores[m].ultimo))
-    fem.write('</ul>')
-    fem.close()
+    generate_Index(lista_generos["MaisOuIgual35"]["F"], "Idade/mais35Fem.html")
 
     #Ref Feminino < 35
-    fem = open("Idade/menos35fem.html", "w")
-    fem.write('<ul>')
-    for m in lista_generos["Menos35"]["F"]:
-        fem.write('<li><a href="athlete/{}.html">{}, {}</a></li>'.format(m, jogadores[m].nome, jogadores[m].ultimo))
-    fem.write('</ul>')
-    fem.close()
+    generate_Index(lista_generos["Menos35"]["F"], "Idade/menos35fem.html")
 
     #Substituções das tags do template
     row = open('template/idadeGenTemplate.html', "r")
@@ -120,20 +98,10 @@ def generate_Resultados(lista_resultados):
     body = ''
     for ano in sorted(lista_resultados):
         #Ref Aptos
-        aptos = open("Resultados/aptos_{}.html".format(ano), "w")
-        aptos.write('<ul>')
-        for m in lista_resultados[ano]["aptos"]:
-            aptos.write('<li><a href="athlete/{}.html">{}, {}</a></li>'.format(m, jogadores[m].nome, jogadores[m].ultimo))
-        aptos.write('</ul>')
-        aptos.close()
+        generate_Index(lista_resultados[ano]["aptos"], "Resultados/aptos_{}.html".format(ano))
 
         #Ref Nao Aptos
-        naoAptos = open("Resultados/naoAptos_{}.html".format(ano), "w")
-        naoAptos.write('<ul>')
-        for m in lista_resultados[ano]["naoAptos"]:
-            naoAptos.write('<li><a href="athlete/{}.html">{}, {}</a></li>'.format(m, jogadores[m].nome, jogadores[m].ultimo))
-        naoAptos.write('</ul>')
-        naoAptos.close()
+        generate_Index(lista_resultados[ano]["naoAptos"], "Resultados/naoAptos_{}.html".format(ano))
 
         t = len(lista_resultados[ano]["aptos"]) + len(lista_resultados[ano]["naoAptos"])
 
@@ -159,12 +127,7 @@ def generate_DistMoradas(lista_moradas):
     body = ''
     for morada in sorted(lista_moradas):
         #Ref moradores
-        moradores = open("Locais/local_{}.html".format(morada), "w")
-        moradores.write('<ul>')
-        for m in lista_moradas[morada]:
-            moradores.write('<li><a href="athlete/{}.html">{}, {}</a></li>'.format(m, jogadores[m].nome, jogadores[m].ultimo))
-        moradores.write('</ul>')
-        moradores.close()
+        generate_Index(lista_moradas[morada], "Locais/local_{}.html".format(morada))
 
 
         content = row.read()
@@ -180,6 +143,7 @@ def generate_DistMoradas(lista_moradas):
     temp = sub(r'{{rows}}', '{}'.format(body), temp)
     w.write(temp)
     w.close
+
 
 def reader():
     inde = open("index.html", "w")
