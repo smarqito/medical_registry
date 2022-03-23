@@ -23,7 +23,7 @@ def generate_Index(lista, filePath):
     file = open(filePath, "w")
     file.write('<ul>')
     for m in lista:
-        file.write('<li><a href="athlete/{}.html">{}, {}</a></li>'.format(m, jogadores[m].nome, jogadores[m].ultimo))
+        file.write('<li><a href="../athlete/{}.html">{}, {}</a></li>'.format(m, jogadores[m].nome, jogadores[m].ultimo))
     file.write('</ul>')
     file.close()
 
