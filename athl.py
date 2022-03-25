@@ -18,6 +18,8 @@ distPorGen = {}
 distPorIdade = {"MaisOuIgual35" : {"M" : [], "F" : []}, "Menos35" : {"M" : [], "F" : []}}
 resultados = {}
 distPorMorada = {}
+distPorMod = {}
+modalidades = []
 
 def generate_Index(lista, filePath):
     file = open(filePath, "w")
@@ -144,6 +146,53 @@ def generate_DistMoradas(lista_moradas):
     w.write(temp)
     w.close
 
+def generate_DistMod(_modalidades):
+    body = ''
+    body2 = ''
+    anos = open("template/anoModTemp.html")
+    for ano in sorted(_modalidades):
+        content = anos.read()
+        content = sub(r'{{ano}}', '{}'.format(ano), content)
+        body2 += content
+        anos.seek(0)
+    anos.close() 
+
+    rows = open("template/rowModTemp.html")
+    coll = open("template/collsModTemp.html")
+    
+    for mod in sorted(modalidades):
+        body3 = ''
+        content = rows.read()
+        
+        for ano in sorted(_modalidades):
+            content2 = coll.read()
+            if not _modalidades[ano].__contains__(mod):
+                l = 0
+            else:
+                l = len(_modalidades[ano][mod])
+            if l != 0:
+                generate_Index(_modalidades[ano][mod], "Modalidade/{}_{}.html".format(mod, ano))
+            content2 = sub(r'{{ref}}', 'Modalidade/{}_{}.html'.format(mod, ano), content2)
+            content2 = sub(r'{{total}}', '{}'.format(l), content2)
+            body3 += content2
+            coll.seek(0)
+
+        content = sub(r'{{mod}}', '{}'.format(mod), content)
+        content = sub(r'{{colls}}', '{}'.format(body3), content)      
+        body += content
+        rows.seek(0)
+        
+    rows.close()
+    coll.close()
+
+    r = open('template/ModalidadeTemplate.html', "r")
+    temp = r.read()
+    temp = sub(r'{{anos}}', body2, temp)
+    temp = sub(r'{{rows}}', body, temp)
+    w = open("modalidades.html", "w")
+    w.write(temp)
+    w.close
+
 
 def reader():
     inde = open("index.html", "w")
@@ -191,6 +240,16 @@ def reader():
             else:
                 resultados[data.year]["naoAptos"].append(j.id)
 
+            #Modalidade
+            if not distPorMod.__contains__(data.year):
+                distPorMod[data.year] = {}
+            if not distPorMod[data.year].__contains__(m.group("modalidade")):
+                distPorMod[data.year][m.group("modalidade")] = []
+            distPorMod[data.year][m.group("modalidade")].append(j.id)
+
+            if not modalidades.__contains__(m.group("modalidade")):
+                modalidades.append(m.group("modalidade"))
+
         templ.close()
         
 
@@ -201,5 +260,6 @@ def reader():
     generate_IdadeGen(distPorIdade)
     generate_Resultados(resultados)
     generate_DistMoradas(distPorMorada)
+    generate_DistMod(distPorMod)
 
 reader()
