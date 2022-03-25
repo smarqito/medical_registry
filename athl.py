@@ -206,7 +206,7 @@ def reader():
             j = Jogador(m)
             jogadores[j.id] = j
             gd = m.groupdict()
-            inde.write(f'<li><a href="athlete/{gd["id"]}.html">{gd["primeiro"]}, {gd["ultimo"]}</a></li>')
+            #inde.write(f'<li><a href="athlete/{gd["id"]}.html">{gd["primeiro"]}, {gd["ultimo"]}</a></li>')
             for k in gd.keys():
                 templat = sub(rf'{{{{{k}}}}}', gd[k], templat)
             nathl = open(f'athlete/{gd["id"]}.html', 'w')
@@ -253,13 +253,18 @@ def reader():
         templ.close()
         
 
-    inde.write('</ul>')
-    inde.close()
 
     generate_DistGen(distPorGen)
+    inde.write(f'<li><a href="gen.html">Distribuição por género</a></li>')
     generate_IdadeGen(distPorIdade)
+    inde.write(f'<li><a href="genIdade.html">Distribuição por idade</a></li>')
     generate_Resultados(resultados)
+    inde.write(f'<li><a href="resultados.html">Resultados</a></li>')
     generate_DistMoradas(distPorMorada)
+    inde.write(f'<li><a href="moradas.html">Distribuição por Morada</a></li>')
     generate_DistMod(distPorMod)
+    inde.write(f'<li><a href="modalidades.html">Distribuição por Modalidade</a></li>')
 
+    inde.write('</ul>')
+    inde.close()
 reader()
