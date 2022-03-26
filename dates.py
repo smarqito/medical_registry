@@ -1,68 +1,71 @@
 import re
 from datetime import datetime
+from athl import *
+from templates import *
 
 reg = r'(?P<id>\w+),(?P<index>\d+),(?P<date>\d{4}-\d{2}-\d{2}),(?P<primeiro>\w+),(?P<ultimo>\w+),(?P<idade>\d+),(?P<gen>[MF]),(?P<morada>\w+),(?P<mod>\w+),(?P<clube>\w+),(?P<email>.*?),(?P<fed>\w+),(?P<result>\w+)'
 
-def writeJogs(jMin, jMax, templat):
-    dates = open("resultado/data_extrema.html", "w")
-    for jogadorMin in jMin:
-        hrefMin = f"../athlete/{jogadorMin[0]}.html"
-        tagMin = rf'<div class="row"><div class="col"><a href="{hrefMin}">{jogadorMin[2]}, {jogadorMin[1]}</a></div></div> \1'
-        templat = re.sub(r'(\{\{min\}\})', tagMin, templat)
 
-    for jogadorMax in jMax:
-        hrefMax = f"../athlete/{jogadorMax[0]}.html"
-        tagMax = rf'<div class="row"><div class="col"><a href="{hrefMax}">{jogadorMax[2]}, {jogadorMax[1]}</a></div></div> \1'
-        templat = re.sub(r'(\{\{max\}\})', tagMax, templat)
+def generate_dates(dict, dataMax, dataMin, templat):
+    
+    # Ref para os atletas com exames na data mínima
+    generate_Index(dict["Min"], "www/datas_extremas/dataMin.html")
 
-    templat = re.sub(r'{{min}}', "", templat)
-    templat = re.sub(r'{{max}}', "", templat)
-    dates.write(templat)
-    dates.close()
+    # Ref para os atletas com exames na data máxima
+    generate_Index(dict["Max"], "www/datas_extremas/dataMax.html")
 
+    cont = {}
+    cont['MinRef'] = '"dataMin.html"'
+    cont['dataMin'] = dataMin
+    cont['MaxRef'] = '"dataMax.html"'
+    cont['dataMax'] = dataMax
 
-def datesReader():
+    temps = templates.load_templates('template/datas_extremas/', {
+        'main': 'index.html'
+    })
+
+    w = open("www/datas_extremas/datas_extrema.html", "w")
+    res = template(cont, "main", temps)
+    w.write(res)
+    w.close()
+
+# Função que calcula as datas extremas - Mínima e Máxima dos exames elaborados aos atletas
+def dist_date():
     f = open("assets/emd.csv")
 
     dataMin = datetime.max.date()
     dataMax = datetime.min.date()
 
-    allJogadores = []
-    maxJ = []
-    minJ = []
+    distPorDate = {}
 
     inde = open("index.html", "w")
     inde.write('<ul>\n')
-    inde.write(f'<li><a href="resultado/data_extrema.html">Datas Extremas</a></li>\n')
-    templ = open("template/data_extrema/dates.html")
+    inde.write(
+        f'<li><a href="ww/datas_extremas/datas_extrema.html">Datas Extremas</a></li>\n')
+    templ = open("template/datas_extremas/index.html")
     templat = templ.read()
     for l in f:
         m = re.match(reg, l)
         if m:
             data = datetime.strptime(m.group("date"), '%Y-%m-%d').date()
-            j = (m.group('id'),m.group('primeiro'),m.group('ultimo'), data)
-            allJogadores.append(j)
+            j = Jogador(m)
             if data < dataMin:
                 dataMin = data
-                minJ = [j]
+                distPorDate["Min"] = [j.id]
             elif data > dataMax:
-               dataMax = data
-               maxJ = [j]
+                dataMax = data
+                distPorDate["Max"] = [j.id]
             elif data == dataMin:
-                minJ.append(j)
+                distPorDate["Min"].append(j.id)
             elif data == dataMax:
-                maxJ.append(j)
+                distPorDate["Max"].append(j.id)
 
-    templat = re.sub(r'dataMinima', dataMin.strftime('%Y-%m-%d'), templat)
-    templat = re.sub(r'dataMaxima', dataMax.strftime('%Y-%m-%d'), templat)
-
-    writeJogs(sorted(minJ), sorted(maxJ), templat)
+    generate_dates(distPorDate, dataMax, dataMin, templat)
 
     inde.write('</ul>')
     inde.close()
     templ.close()
     f.close()
 
-datesReader()
 
-
+dist_date()
