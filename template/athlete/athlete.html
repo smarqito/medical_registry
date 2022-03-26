@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <title>{{ultimo}}, {{primeiro}}</title>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <label for="data">Data</label>
+                <input class="form-control" type="text" value="{{date}}" aria-label="{{date}}" readonly>
+            </div>
+            <div class="col">
+                <label for="resultado">Resultado</label>
+                <input class="form-control" type="text" value="{{resultado}}" aria-label="{{resultado}}" readonly>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <label for="nome">Nome</label>
+               <input class="form-control" type="text" value="{{primeiro}} {{ultimo}}" aria-label="{{primeiro}} {{ultimo}}" readonly>
+            </div>
+            <div class="col">
+                <label for="genero">Género</label>
+                <input class="form-control" type="text" value="{{genero}}" aria-label="{{genero}}" readonly>
+            </div>
+            <div class="col">
+                <label for="genero">Idade</label>
+                <input class="form-control" type="text" value="{{idade}} anos" aria-label="{{idade}} anos" readonly>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <label for="morada">Morada</label>
+                <input class="form-control" type="text" value="{{morada}}" aria-label="{{morada}}" readonly>
+            </div>
+            <div class="col">
+                <label for="email">Email</label>
+                <input class="form-control" type="text" value="{{email}}" aria-label="{{email}}" readonly>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <label for="modalidade">Modalidade</label>
+                <input class="form-control" type="text" value="{{modalidade}}" aria-label="{{modalidade}}" readonly>
+            </div>
+            <div class="col-3">
+                <label for="clube">Clube</label>
+                <input class="form-control" type="text" value="{{clube}}" aria-label="{{clube}}" readonly>
+            </div>
+            <div class="col">
+                <label for="federado">Federado</label>
+                <input class="form-control" type="text" value="{{federado}}" aria-label="{{federado}}" readonly>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
