@@ -47,7 +47,7 @@ def template(obj : dict, temps: dict) -> str:
     for k in obj:
         if type(obj[k]) is list:
             total = ''
-            m = search(rf'{{{{(\w+), {k}}}}}', res)
+            m = search(rf'{{{{(\w+), {k}}}}}', res) # search the key and get template name
             if m:
                 for i in obj[k]:
                     tmp = temps[m[1]]
