@@ -1,49 +1,42 @@
 import re
 from datetime import datetime
+from athl import*
+from templates import load_templates, template
 
 reg = r'(?P<id>\w+),(?P<index>\d+),(?P<date>\d{4}-\d{2}-\d{2}),(?P<primeiro>\w+),(?P<ultimo>\w+),(?P<idade>\d+),(?P<gen>[MF]),(?P<morada>\w+),(?P<mod>\w+),(?P<clube>\w+),(?P<email>.*?),(?P<fed>\w+),(?P<result>\w+)'
 
-def write_feds(dict):
-    w = open('www/estatuto_federado.html', "w")
-    row = open('template/federado/federadoPorAno.html', "r")
-    body = ''
-    for ano in dict:
-        #Ref Federados
-        fed = open("federado/fed_{}.html".format(ano), "w")
-        fed.write('<ul>')
-        fedList = sorted(dict[ano]["Fed"], key=lambda tup: tup[1])
-        for m in fedList:
-            fed.write('<li><a href="athlete/{}.html">{}, {}</a></li>'.format(m[0], m[2], m[1]))
-        fed.write('</ul>')
-        fed.close()
 
-        #Ref Nao Federados
-        naoFed = open("federado/naoFed_{}.html".format(ano), "w")
-        naoFed.write('<ul>')
-        naoFedList = sorted(dict[ano]["NFed"], key=lambda tup: tup[1])
-        for m in naoFedList: 
-            naoFed.write('<li><a href="athlete/{}.html">{}, {}</a></li>'.format(m[0], m[2], m[1]))
-        naoFed.write('</ul>')
-        naoFed.close()
+def write_feds(dict):
+    cont = {}
+    cont['federados'] = []
+
+    for ano in dict:
+        # Ref Federados
+        generate_Index(dict[ano]["Fed"], f"www/federado/fed_{ano}")
+
+        # Ref Nao Federados
+        generate_Index(dict[ano]["NFed"], f"www/federado/naoFed_{ano}")
 
         t = len(dict[ano]["Fed"]) + len(dict[ano]["NFed"])
+        new_ano = {'ano': ano}
 
-        content = row.read()
-        content = re.sub(r'{{ano}}', '{}'.format(ano), content)
-        content = re.sub(r'{{FedRef}}', '"fed_{}.html"'.format(ano), content)
-        content = re.sub(r'{{NFedRef}}', '"naoFed_{}.html"'.format(ano), content)
-        content = re.sub(r'{{Federado}}', '{}'.format(len(dict[ano]["Fed"])), content)
-        content = re.sub(r'{{NaoFederado}}', '{}'.format(len(dict[ano]["NFed"])), content)
-        body += content
-        row.seek(0)
-        
-    row.close()
-    r = open('template/federado/federado.html', "r")
-    temp = r.read()
-    temp = re.sub(r'{{federados}}', '{}'.format(body), temp)
-    w.write(temp)
-    r.close()
+        new_ano['ano'] = ano
+        new_ano['FedRef'] = f'fed_{ano}.html'
+        new_ano['FedRef'] = f'naoFed_{ano}.html'
+        new_ano['Fed'] = len(dict[ano]["Fed"])
+        new_ano['NFed'] = len(dict[ano]["NFed"])
+        cont['federados'].append(new_ano)
+
+    temps = load_templates('template/federado/', {
+        'federadoPorAno': 'row.html',
+        'main': 'index.html'
+    })
+
+    w = open('www/federado/estatuto_federado.html', "w")
+    res = template(cont, "main", temps)
+    w.write(res)
     w.close()
+
 
 def dist_Fed():
     f = open("assets/emd.csv")
@@ -52,30 +45,32 @@ def dist_Fed():
 
     inde = open("index.html", "w")
     inde.write('<ul>\n')
-    inde.write(f'<li><a href="resultado/estatuto_federado.html">Estatuto de Federado</a></li>\n')
+    inde.write(
+        f'<li><a href="resultado/estatuto_federado.html">Estatuto de Federado</a></li>\n')
 
     for l in f:
-        m = re.match(reg,l)
+        m = re.match(reg, l)
         if m:
             data = datetime.strptime(m.group("date"), "%Y-%m-%d").date()
-            j = (m.group('id'),m.group('primeiro'),m.group('ultimo'))
+            j = Jogador(m)
 
-            #Se não existir o ano no dicionário, adiciona a vazio
+            # Se não existir o ano no dicionário, adiciona a vazio
             if not distPorFed.__contains__(data.year):
                 distPorFed[data.year] = {"Fed": [], "NFed": []}
 
             fed = m.group('fed') == "true"
-            #Coloca no respetivo array, caso tenha estatuto de federado e caso não tenha
+            # Coloca no respetivo array, caso tenha estatuto de federado e caso não tenha
             if fed:
-                distPorFed[data.year]["Fed"].append(j)
-            else: 
-                distPorFed[data.year]["NFed"].append(j)
+                distPorFed[data.year]["Fed"].append(j.id)
+            else:
+                distPorFed[data.year]["NFed"].append(j.id)
 
-    #Função para escrever a distribuição por federado
+    # Função para escrever a distribuição por federado
     write_feds(distPorFed)
 
     inde.write('</ul>')
     inde.close()
     f.close()
+
 
 dist_Fed()

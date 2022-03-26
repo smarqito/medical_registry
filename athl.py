@@ -7,7 +7,6 @@ reg = r'(?P<id>\w+),(?P<index>\d+),(?P<date>\d{4}-\d{2}-\d{2}),(?P<primeiro>\w+)
 
 f = open("assets/emd.csv")
 
-
 class Jogador:
     def __init__(self, m):
         self.id = m.group("id")
@@ -37,9 +36,8 @@ def generate_Index(lista, filePath):
 
 def generate_DistGen(lista_anos):
     w = open("gen.html", "w")
-    #row = open('template/rowsGenTemp.html', "r")
-    #body = ''
     cont = {}
+    cont['rows'] = []
     for membro in sorted(lista_anos):
         cont[membro] = {}
         # Ref Masculino
@@ -50,32 +48,23 @@ def generate_DistGen(lista_anos):
         generate_Index(lista_anos[membro]["F"],
                        "www/genero/fem_{}.html".format(membro))
 
-        #content = row.read()
-        #content = sub(r'{{ano}}', '{}'.format(membro), content)
-        cont[membro]['ano'] = membro
-        #content = sub(r'{{refM}}', '"Genero/masc_{}.html"'.format(membro), content)
-        cont[membro]['refM'] = '"masc_{}.html"'.format(membro)
-        #content = sub(r'{{refF}}', '"Genero/fem_{}.html"'.format(membro), content)
-        cont[membro]['refF'] = '"fem_{}.html"'.format(membro)
-        #content = sub(r'{{TotalM}}', '{}'.format(len(lista_anos[membro]["M"])), content)
-        cont[membro]['TotalM'] = len(lista_anos[membro]["M"])
-        #content = sub(r'{{TotalF}}', '{}'.format(len(lista_anos[membro]["F"])), content)
-        cont[membro]['TotalF'] = len(lista_anos[membro]["F"])
-        #content = sub(r'{{Total}}', '{}'.format(len(lista_anos[membro]["M"]) + len(lista_anos[membro]["F"])), content)
-        cont[membro]['Total'] = len(lista_anos[membro]["M"]) + len(lista_anos[membro]["F"])
-        #body += content
-        #row.seek(0)
+        new_ano = {'ano': membro}
+        new_ano['ano'] = membro
+        new_ano['refM'] = '"masc_{}.html"'.format(membro)
+        new_ano['refF'] = '"fem_{}.html"'.format(membro)
+        new_ano['TotalM'] = len(lista_anos[membro]["M"])
+        new_ano['TotalF'] = len(lista_anos[membro]["F"])
+        new_ano['Total'] = len(
+            lista_anos[membro]["M"]) + len(lista_anos[membro]["F"])
+        cont["rows"].append(new_ano)
 
-    #row.close()
-    temps = templates.load_templates('template/',
+    # row.close()
+    temps = templates.load_templates('template/genero/',
                                      {
-                                         'rows': 'rowsGenTemp.html',
+                                         'rowsGenTemp': 'rowsGenTemp.html',
                                          'main': 'genTemplate.html'
                                      })
 
-    #genT = open('template/genTemplate.html', "r")
-    #temp = genT.read()
-    #temp = sub(r'{{rows}}', '{}'.format(body), temp)
     res = templates.template(cont, "main", temps)
     w.write(res)
     w.close
@@ -91,41 +80,29 @@ def generate_IdadeGen(lista_generos):
     generate_Index(lista_generos["Menos35"]["M"], "www/idade/menos35Masc.html")
 
     # Ref Feminino >=35
-    generate_Index(lista_generos["MaisOuIgual35"]["F"], "www/idade/mais35Fem.html")
+    generate_Index(lista_generos["MaisOuIgual35"]
+                   ["F"], "www/idade/mais35Fem.html")
 
     # Ref Feminino < 35
     generate_Index(lista_generos["Menos35"]["F"], "www/idade/menos35fem.html")
 
     # Substituções das tags do template
     cont = {}
-    #row = open('template/idadeGenTemplate.html', "r")
-    #content = row.read()
-    #content = sub(r'{{Mais35refM}}', '"Idade/mais35Masc.html"', content)
     cont['Mais35refM'] = '"mais35Masc.html"'
-    #content = sub(r'{{Mais35TotalM}}', '{}'.format(len(lista_generos["MaisOuIgual35"]["M"])), content)
     cont['Mais35TotalM'] = len(lista_generos["MaisOuIgual35"]["M"])
-    #content = sub(r'{{Mais35refF}}', '"Idade/mais35Fem.html"', content)
     cont['Mais35refF'] = '"mais35Fem.html"'
-    #content = sub(r'{{Mais35TotalF}}', '{}'.format(len(lista_generos["MaisOuIgual35"]["F"])), content)
     cont['Mais35TotalF'] = len(lista_generos["MaisOuIgual35"]["F"])
 
-    #content = sub(r'{{Mais35Total}}', '{}'.format(len(lista_generos["MaisOuIgual35"]["M"]) + len(lista_generos["MaisOuIgual35"]["F"])), content)
     cont['Mais35Total'] = len(
         lista_generos["MaisOuIgual35"]["M"]) + len(lista_generos["MaisOuIgual35"]["F"])
-    #content = sub(r'{{Menos35refM}}', '"Idade/menos35Masc.html"', content)
     cont['Menos35refM'] = 'menos35Masc.html"'
-    #content = sub(r'{{Menos35TotalM}}', '{}'.format(len(lista_generos["Menos35"]["M"])), content)
     cont['Menos35TotalM'] = len(lista_generos["Menos35"]["M"])
-    #content = sub(r'{{Menos35refF}}', '"Idade/menos35Fem.html"', content)
     cont['Menos35refF'] = 'menos35Fem.html"'
-    #content = sub(r'{{Menos35TotalF}}', '{}'.format(len(lista_generos["Menos35"]["F"])), content)
     cont['Menos35TotalF'] = len(lista_generos["Menos35"]["F"])
-    #content = sub(r'{{Menos35Total}}', '{}'.format(len(lista_generos["Menos35"]["M"]) + len(lista_generos["Menos35"]["F"])), content)
     cont['Menos35Total'] = len(
         lista_generos["Menos35"]["M"]) + len(lista_generos["Menos35"]["F"])
-    # row.close()
 
-    temps = templates.load_templates('template/',
+    temps = templates.load_templates('template/idade/',
                                      {
                                          'main': 'idadeGenTemplate.html'
                                      })
@@ -137,12 +114,9 @@ def generate_IdadeGen(lista_generos):
 
 
 def generate_Resultados(lista_resultados):
-    w = open("resultados.html", "w")
-    row = open('template/rowResultsTemp.html', "r")
-    #body = ''
     cont = {}
+    cont['rows'] = []
     for ano in sorted(lista_resultados):
-        cont[ano] = {}
         # Ref Aptos
         generate_Index(lista_resultados[ano]["aptos"],
                        "www/resultados/aptos_{}.html".format(ano))
@@ -154,62 +128,52 @@ def generate_Resultados(lista_resultados):
         t = len(lista_resultados[ano]["aptos"]) + \
             len(lista_resultados[ano]["naoAptos"])
 
-        #content = row.read()
-        #content = sub(r'{{ano}}', '{}'.format(ano), content)
-        cont[ano]['ano'] = ano
-        #content = sub(r'{{AptosRef}}',
-        #              '"Resultados/aptos_{}.html"'.format(ano), content)
-        cont[ano]['AptosRef'] = 'aptos_{}.html"'.format(ano)
-        #content = sub(r'{{NaoAptosRef}}',
-        #              '"Resultados/naoAptos_{}.html"'.format(ano), content)
-        cont[ano]['NaoAptosRef'] = 'naoAptos_{}.html"'.format(ano)
-        #content = sub(r'{{Aptos}}', '{:.0f}%'.format(
-        #    (len(lista_resultados[ano]["aptos"]) / t) * 100), content)
-        cont[ano]['Aptos'] = (len(lista_resultados[ano]["aptos"]) / t) * 100
-        #content = sub(r'{{NaoAptos}}', '{:.0f}%'.format(
-        #    (len(lista_resultados[ano]["naoAptos"])/t) * 100), content)
-        cont[ano]['NaoAptos'] = (len(lista_resultados[ano]["naoAptos"]) / t) * 100
-        #body += content
-        #row.seek(0)
+        new_ano = {'ano': ano}
+        new_ano['ano'] = ano
+        new_ano['AptosRef'] = 'aptos_{}.html"'.format(ano)
+        new_ano['NaoAptosRef'] = 'naoAptos_{}.html"'.format(ano)
+        new_ano['Aptos'] = (len(lista_resultados[ano]["aptos"]) / t) * 100
+        new_ano['NaoAptos'] = (
+            len(lista_resultados[ano]["naoAptos"]) / t) * 100
+        cont["rows"].append(new_ano)
 
-    row.close()
-
-    temps = templates.load_templates('template/',
+    temps = templates.load_templates('template/resultados/',
                                      {
+                                         'rowResultsTemp': 'rowResultsTemp.html',
                                          'main': 'resultadosTemplate.html'
                                      })
 
-    #r = open('template/resultadosTemplate.html', "r")
-    #temp = r.read()
-    #temp = sub(r'{{rows}}', '{}'.format(body), temp)
+
+    w = open("resultados.html", "w")
     res = templates.template(cont, "main", temps)
     w.write(res)
     w.close
 
-
 def generate_DistMoradas(lista_moradas):
     w = open("moradas.html", "w")
-    row = open('template/rowMoradaTemp.html', "r")
-    body = ''
+
+    cont = {}
+    cont['rows'] = []
     for morada in sorted(lista_moradas):
         # Ref moradores
         generate_Index(lista_moradas[morada],
-                       "Locais/local_{}.html".format(morada))
+                       "www/locais/local_{}.html".format(morada))
 
-        content = row.read()
-        content = sub(r'{{Morada}}', '{}'.format(morada), content)
-        content = sub(r'{{MoradoresRef}}',
-                      '"Locais/local_{}.html"'.format(morada), content)
-        content = sub(r'{{Moradores}}', '{}'.format(
-            len(lista_moradas[morada])), content)
-        body += content
-        row.seek(0)
+        new_morada = {'morada': morada}
+        new_morada['Morada'] = morada
+        new_morada['MoradoresRef'] = 'local_{}.html"'.format(morada)
+        new_morada['Moradores'] = len(lista_moradas[morada])
+        cont["rows"].append(new_morada)
 
-    row.close()
+    temps = templates.load_templates('template/morada/',
+                                     {
+                                         'rowMoradaTemp': 'rowMoradaTemp.html',
+                                         'main': 'moradasTemplate.html'
+                                     })
+
     r = open('template/moradasTemplate.html', "r")
-    temp = r.read()
-    temp = sub(r'{{rows}}', '{}'.format(body), temp)
-    w.write(temp)
+    res = templates.template(cont, "main", temps)
+    w.write(res)
     w.close
 
 
@@ -228,7 +192,7 @@ def generate_DistMod(_modalidades: dict):
         temp = {'mod': mod}
         temp['colls'] = []
         for ano in sorted(_modalidades):
-            new_ano = {'ano' : ano}
+            new_ano = {'ano': ano}
             if not _modalidades[ano].__contains__(mod):
                 l = 0
             else:
@@ -335,7 +299,7 @@ def reader():
     # inde.write(f'<li><a href="resultados.html">Resultados</a></li>')
     # generate_DistMoradas(distPorMorada)
     # inde.write(f'<li><a href="moradas.html">Distribuição por Morada</a></li>')
-    generate_DistMod(distPorMod)
+    # generate_DistMod(distPorMod)
     # inde.write(
     #     f'<li><a href="modalidades.html">Distribuição por Modalidade</a></li>')
 
