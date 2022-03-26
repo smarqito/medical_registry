@@ -20,7 +20,7 @@ def load_templates(rootPath : str, temps: dict) -> dict:
     for t_key, t_name in temps.items():
         t = open(f'{rootPath}{t_name}', 'r')
         temps[t_key] = t.read()
-        t.close
+        t.close()
     return temps
 
 @dispatch(dict, str)
@@ -29,12 +29,23 @@ def template(obj: dict, temp: str) -> str:
     \t obj[key] must match with template {{key}}
     \tWill replace {{key}} w/ obj[key] value
     '''
+    print("template dict:", obj)
     for k in obj:
-        temp = sub(rf'{{{{{k}}}}}', obj[k], temp)
+        temp = sub(rf'{{{{{k}}}}}', str(obj[k]), temp)
     return temp
 
-@dispatch(dict, dict)
-def template(obj : dict, temps: dict) -> str:
+@dispatch(list, str)
+def template(obj: list, temp: str) -> str:
+    res = ''
+    for e in obj:
+        if type(e) is dict:
+            res += template(e, temp)
+        else:
+            res += sub(r'\{\{\w+\}\}', str(e), temp)
+    return res
+
+@dispatch(object, str, dict)
+def template(obj, temp, temps: dict) -> str:
     '''Utilizar em templates com listas\n
         temps -> {'template_name': 'template'}\n
         Estrategia:\n
@@ -42,20 +53,26 @@ def template(obj : dict, temps: dict) -> str:
         \t\ttemp should have {{temp_name, key}} to be overriden
         \tIf is not a list, behaves the same way as simple template
     '''
-    res = temps['main']
-    print(temps['athl_item'])
-    for k in obj:
-        if type(obj[k]) is list:
-            total = ''
-            m = search(rf'{{{{(\w+), {k}}}}}', res) # search the key and get template name
-            if m:
-                for i in obj[k]:
-                    tmp = temps[m[1]]
-                    for ik in i:
-                        tmp = sub(rf'{{{{{ik}}}}}', i[ik], tmp)
-                    total += tmp
-                res = sub(rf'{{{{(\w+), {k}}}}}', total, res)
-        else:
-            res = sub(rf'{{{{{k}}}}}', obj[k], res)
+    res = temps[temp]
+    print("template:", temp)
+    iterable = findall(r'\{\{(\w+), (\w+)\}\}', res)
+    
+    for t, key in iterable:
+        if type(obj) is dict:
+            print("antes dict")
+            found = template(obj[key], t, temps) # itera todos os que tem templates
+            print("depois dict")
+            res = sub(rf'{{{{{t}, {key}}}}}', found, res) # preenche a template
+        elif type(obj) is list:
+            found = ''
+            for e in obj:
+                if type(e) is dict:
+                    found += template(e[key], t, temps)
+                else:
+                    found += template(e, t, temps)
+            res = sub(rf'{{{{{t}, {key}}}}}', found, temps[temp])
+
+    res = template(obj, res)
+
     return res
 

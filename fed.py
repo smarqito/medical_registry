@@ -4,8 +4,8 @@ from datetime import datetime
 reg = r'(?P<id>\w+),(?P<index>\d+),(?P<date>\d{4}-\d{2}-\d{2}),(?P<primeiro>\w+),(?P<ultimo>\w+),(?P<idade>\d+),(?P<gen>[MF]),(?P<morada>\w+),(?P<mod>\w+),(?P<clube>\w+),(?P<email>.*?),(?P<fed>\w+),(?P<result>\w+)'
 
 def write_feds(dict):
-    w = open('federado/estatutoFederado.html', "w")
-    row = open('template/federadoPorAno.html', "r")
+    w = open('www/estatuto_federado.html', "w")
+    row = open('template/federado/federadoPorAno.html', "r")
     body = ''
     for ano in dict:
         #Ref Federados
@@ -38,7 +38,7 @@ def write_feds(dict):
         row.seek(0)
         
     row.close()
-    r = open('template/federado.html', "r")
+    r = open('template/federado/federado.html', "r")
     temp = r.read()
     temp = re.sub(r'{{federados}}', '{}'.format(body), temp)
     w.write(temp)
@@ -52,7 +52,7 @@ def dist_Fed():
 
     inde = open("index.html", "w")
     inde.write('<ul>\n')
-    inde.write(f'<li><a href="federado/estatutoFederado.html">Estatuto de Federado</a></li>\n')
+    inde.write(f'<li><a href="resultado/estatuto_federado.html">Estatuto de Federado</a></li>\n')
 
     for l in f:
         m = re.match(reg,l)
@@ -60,15 +60,18 @@ def dist_Fed():
             data = datetime.strptime(m.group("date"), "%Y-%m-%d").date()
             j = (m.group('id'),m.group('primeiro'),m.group('ultimo'))
 
+            #Se não existir o ano no dicionário, adiciona a vazio
             if not distPorFed.__contains__(data.year):
                 distPorFed[data.year] = {"Fed": [], "NFed": []}
 
             fed = m.group('fed') == "true"
+            #Coloca no respetivo array, caso tenha estatuto de federado e caso não tenha
             if fed:
                 distPorFed[data.year]["Fed"].append(j)
             else: 
                 distPorFed[data.year]["NFed"].append(j)
 
+    #Função para escrever a distribuição por federado
     write_feds(distPorFed)
 
     inde.write('</ul>')

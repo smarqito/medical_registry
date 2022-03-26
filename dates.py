@@ -4,21 +4,21 @@ from datetime import datetime
 reg = r'(?P<id>\w+),(?P<index>\d+),(?P<date>\d{4}-\d{2}-\d{2}),(?P<primeiro>\w+),(?P<ultimo>\w+),(?P<idade>\d+),(?P<gen>[MF]),(?P<morada>\w+),(?P<mod>\w+),(?P<clube>\w+),(?P<email>.*?),(?P<fed>\w+),(?P<result>\w+)'
 
 def writeJogs(jMin, jMax, templat):
-    w = open("dates/dates.html", "w")
+    dates = open("resultado/data_extrema.html", "w")
     for jogadorMin in jMin:
-        hrefMin = "../athlete/{}.html".format(jogadorMin[0])
-        tagMin = r'<div class="row"><div class="col"><a href="{}">{}, {}</a></div></div> \1'.format(hrefMin, jogadorMin[2], jogadorMin[1])
+        hrefMin = f"../athlete/{jogadorMin[0]}.html"
+        tagMin = rf'<div class="row"><div class="col"><a href="{hrefMin}">{jogadorMin[2]}, {jogadorMin[1]}</a></div></div> \1'
         templat = re.sub(r'(\{\{min\}\})', tagMin, templat)
 
     for jogadorMax in jMax:
-        hrefMax = "../athlete/{}.html".format(jogadorMax[0])
-        tagMax = r'<div class="row"><div class="col"><a href="{}">{}, {}</a></div></div> \1'.format(hrefMax, jogadorMax[2], jogadorMax[1])
+        hrefMax = f"../athlete/{jogadorMax[0]}.html"
+        tagMax = rf'<div class="row"><div class="col"><a href="{hrefMax}">{jogadorMax[2]}, {jogadorMax[1]}</a></div></div> \1'
         templat = re.sub(r'(\{\{max\}\})', tagMax, templat)
 
     templat = re.sub(r'{{min}}', "", templat)
     templat = re.sub(r'{{max}}', "", templat)
-    w.write(templat)
-    w.close()
+    dates.write(templat)
+    dates.close()
 
 
 def datesReader():
@@ -33,8 +33,8 @@ def datesReader():
 
     inde = open("index.html", "w")
     inde.write('<ul>\n')
-    inde.write(f'<li><a href="dates/dates.html">Datas Extremas</a></li>\n')
-    templ = open("template/dates.html")
+    inde.write(f'<li><a href="resultado/data_extrema.html">Datas Extremas</a></li>\n')
+    templ = open("template/data_extrema/dates.html")
     templat = templ.read()
     for l in f:
         m = re.match(reg, l)
