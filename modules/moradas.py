@@ -1,5 +1,5 @@
 from modules.athl import *
-from modules.globals import create_folder, output
+from modules.globals import create_folder_output, output
 distPorMorada = {}
 
 
@@ -13,7 +13,7 @@ def read_Morada(j: Jogador, morada: str) -> dict:
 def generate_DistMoradas(jogadores):
     global output
     file_name = 'moradas'
-    create_folder(file_name)
+    create_folder_output(file_name)
     cont = {}
     cont['rows'] = []
     for morada in sorted(distPorMorada):

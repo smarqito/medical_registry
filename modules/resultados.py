@@ -1,7 +1,7 @@
 from modules.athl import *
 import math 
 from datetime import datetime
-from modules.globals import create_folder, output
+from modules.globals import create_folder_output, output
 
 resultados = {}
 
@@ -17,7 +17,7 @@ def read_Resultados(j : Jogador, data : datetime, resultado : str) -> dict:
 def generate_Resultados(jogadores):
     global output
     file_name = 'resultados'
-    create_folder(file_name)
+    create_folder_output(file_name)
     cont = {}
     cont['rows'] = []
     for ano in sorted(resultados):

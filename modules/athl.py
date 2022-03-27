@@ -1,19 +1,23 @@
 #!/usr/bin/env python3
 import templates
 from modules.jogador import *
+from modules.globals import create_folder_output, output
 
 def generate_athelete(gd : dict):
+    global output
+    file_name = 'athlete'
+    create_folder_output(file_name)
     cont = {}
     for k in gd.keys():
         cont[k] = gd[k]
 
-    temps = templates.load_templates('template/athlete/',
+    temps = templates.load_templates(f'template/{file_name}/',
                                      {
                                          'main': 'athlete.html'
                                      })
 
     res = templates.template(cont, "main", temps)
-    nathl = open(f'www/athlete/{gd["id"]}.html', 'w')
+    nathl = open(f'{output}/{file_name}/{gd["id"]}.html', 'w')
     nathl.write(res)
     nathl.close()
 
