@@ -6,7 +6,9 @@ from modules.globals import create_folder_output, get_output
 
 distPorFed = {}
 
-def read_Fed(j : Jogador, data : datetime, federado : str):
+def read_Fed(j : Jogador):
+    data = j.date
+    federado = j.federado
     if not distPorFed.__contains__(data.year):
         distPorFed[data.year] = {"Fed": [], "NFed": []}
     fed = federado == "true"
