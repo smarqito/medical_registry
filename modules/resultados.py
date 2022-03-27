@@ -1,21 +1,25 @@
 from modules.athl import *
-import math 
+import math
 from datetime import datetime
-from modules.globals import create_folder_output, output
+from modules.globals import create_folder_output, get_output
 
 resultados = {}
 
-def read_Resultados(j : Jogador, data : datetime, resultado : str) -> dict:
+
+def read_Resultados(j: Jogador) -> dict:
+    data = j.date
+    resultado = j.resultado
     if not resultados.__contains__(data.year):
-                resultados[data.year] = {"aptos": [], "naoAptos": []}
+        resultados[data.year] = {"aptos": [], "naoAptos": []}
     res = resultado == "true"
     if res:
         resultados[data.year]["aptos"].append(j.id)
     else:
         resultados[data.year]["naoAptos"].append(j.id)
 
+
 def generate_Resultados(jogadores):
-    global output
+    output = get_output()
     file_name = 'resultados'
     create_folder_output(file_name)
     cont = {}
@@ -33,8 +37,8 @@ def generate_Resultados(jogadores):
             len(resultados[ano]["naoAptos"])
 
         new_ano = {'ano': ano}
-        new_ano['AptosRef'] = f'"{output}/{file_name}/aptos_{ano}.html"'
-        new_ano['NaoAptosRef'] = f'"{output}/{file_name}/naoAptos_{ano}.html"'
+        new_ano['AptosRef'] = f'"{file_name}/aptos_{ano}.html"'
+        new_ano['NaoAptosRef'] = f'"{file_name}/naoAptos_{ano}.html"'
         new_ano['Aptos'] = math.ceil((len(resultados[ano]["aptos"]) / t) * 100)
         new_ano['NaoAptos'] = math.ceil((
             len(resultados[ano]["naoAptos"]) / t) * 100)
@@ -45,7 +49,6 @@ def generate_Resultados(jogadores):
                                          'rowResultsTemp': 'row.html',
                                          'main': 'index.html'
                                      })
-
 
     res = templates.template(cont, "main", temps)
     w = open(f"{output}/{file_name}.html", "w")
