@@ -48,11 +48,18 @@ def mode(bool: bool):
     for arg in findall(r'\w(?!:)', args_filter):
         opts[arg] = bool
 
+def show_help():
+    f = open('manual.txt', 'r')
+    print(f.read())
+    f.close()
 
 def handle_args():
     mode(True)
     '''inicia as opts todas a true'''
-    optlist, args = getopt.getopt(sys.argv[1:], args_filter)
+    optlist, args = getopt.getopt(sys.argv[1:], args_filter, ['help'])
+    if ('--help', '') in optlist:
+        show_help()
+        sys.exit()
     if args:
         sys.stdin = open(args[0], 'r')
     if optlist:

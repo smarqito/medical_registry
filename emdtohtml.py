@@ -1,3 +1,14 @@
+#!/usr/bin/env python3 
+#----------------------------------------------------------------
+# Created by: Grupo 53
+# Created date: 2022-03-27
+# Version = '1.0'
+#----------------------------------------------------------------
+''' emdtohtml.py: ./emdtohtml.py <flags> <input> '''
+#----------------------------------------------------------------
+from re import *
+import sys
+
 from re import *
 from modules.athl import generate_Index, generate_athelete
 from modules.dates import generate_dates, read_dates
