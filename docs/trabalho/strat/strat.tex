@@ -14,11 +14,11 @@ livremente todos os parâmetros a serem usados para construir a página principa
 No âmbito de modularizar o projeto, e construir uma \textbf{arquitetura} mais organizada, o trabalho associado à criação das páginas \textit{HTMl} encontra-se 
 particionado por vários ficheiros. 
 Neste sentido, cada \textbf{indicador estatístico} corresponderá ao seu \textbf{módulo}, um programa em \textit{Python} responsável por gerá-lo, sendo uma análise mais aprofundada
-sobre este tópico localizada em \ref{}.
+sobre este tópico localizada em \ref{subsubsec:modulos}.
 
-Não obstante os múltíplos programas criados para popular a página principal, todo este trabalho irá localizar-se no ficheiro \textit{reader.py}. 
+Não obstante os múltíplos programas criados para popular a página principal, todo este trabalho irá localizar-se no ficheiro \textit{emdtohtml.py}. 
 Este irá simultaneamente agregar toda a informação a ser usada para cada indicador e usá-la so chamar os módulos criados, culminando na criação do 
-\textit{index.html} (\ref{}). 
+\textit{index.html}, através da função \textit{Reader} (\ref{subsubsec:reader}). 
 
 \dots todos os módulos terão por base um ou mais \textit{templates HTML}, sendo que cada indicador tem a sua própria estrutura de apresentação (\ref{subsubsec:templates}).
 
