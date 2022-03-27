@@ -3,8 +3,18 @@
 % Version 2.20 of 2017/10/04
 %
 \documentclass[runningheads]{llncs}
+
+\usepackage[a4paper]{geometry}
 %
-% \usepackage{graphicx}
+\usepackage{graphicx}
+\usepackage{minted}
+\setminted[bash]{
+frame=lines,
+breaklines,
+fontsize=\footnotesize,
+framesep=2mm
+}
+
 % Used for displaying a sample figure. If possible, figure files should
 % be included in EPS format.
 %
@@ -27,6 +37,7 @@ Miguel Fernandes\inst{1,2}\orcidID{94269}}
 \institute{Universidade do Minho\\
 \and Licenciatura em Engenharia Informática, Braga, Portugal}
 %
+%Colocar Numero do Grupo
 \maketitle              % typeset the header of the contribution
 %
 \begin{abstract}
@@ -39,7 +50,7 @@ The abstract should briefly summarize the contents of the paper in
 %
 %
 \section{Introdução}
-\subsection{Contextualização}
+\subsection{Contextualização} 
 
 \input{Introducao/context.tex}
 
@@ -47,33 +58,33 @@ The abstract should briefly summarize the contents of the paper in
 
 \input{Introducao/descr.tex}
 
-\section{Trabalho Realizado}
+\section{Trabalho Realizado} 
 
-\subsection{Estratégia Utilizada}
+\subsection{Estratégia Utilizada} \label{subsec:strat}
 
 \input{trabalho/strat/strat.tex}
 
-\subsubsection{Padrão ER Utilizado}
+\subsubsection{Padrão ER Utilizado} \label{subsubsec:padrao}
 
 \input{trabalho/strat/padrao.tex}
 
-\subsubsection{Reader}
+\subsubsection{Reader}\label{reader}
 
 \input{trabalho/strat/reader.tex}
 
-\subsubsection{Módulos}
+\subsubsection{Módulos}\label{modulos}
 
 \input{trabalho/strat/modules.tex}
 
-\subsubsection{Templates}
+\subsubsection{Templates} \label{subsubsec:templates}
 
 \input{trabalho/strat/templates.tex}
 
-\subsection{Apresentação dos Indicadores}
+\subsection{Apresentação dos Indicadores} \label{subsec:indicadores}
 
 \input{trabalho/presentation/presentation.tex}
 
-\section{Conclusões}
+\section{Conclusões} 
 
 \input{conclusao/conclusao.tex}
 
@@ -85,8 +96,8 @@ The abstract should briefly summarize the contents of the paper in
 %
 % \bibliographystyle{splncs04}
 % \bibliography{mybibliography}
-%
-% \begin{thebibliography}{8}
+% %
+% \begin{thebibliography}{1}
 % \bibitem{ref_article1}
 % Author, F.: Article title. Journal \textbf{2}(5), 99--110 (2016)
 

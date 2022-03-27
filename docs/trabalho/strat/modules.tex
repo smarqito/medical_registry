@@ -1,0 +1,21 @@
+Foi criado um \textit{module} por cada indicador estatístico para que estes fossem
+responsáveis pelas variáveis criadas no reader(\ref{reader}) e também pela criação
+do \textit{html} correspondente.
+
+A geração do ficheiro \textit{html} passa por percorrer todas os conjuntos de chave-valor
+dos dicionários, cada parâmetro do indicador é calculado com base numa lista de ids, que posteriormente é  
+transformada numa página \textit{html} com a lista de nomes dos atletas, em que cada um tem uma hiperligação 
+para a sua página pessoal de informações. 
+
+Todos os parâmetro calculados e respetivas informações que o permitiram calcular, especificamente o 
+\textit{path} para a página dos nomes dos atletas, são armazenados e passados ao módulo template.
+
+Módulo template ... 
+
+Classe jogador ...
+
+O módulo globals é o responsável pela geração das pastas onde é colocado o \textit{output} do pograma
+consoante os argumentos de inicalização recebidos. A pasta de \textit{output} gera tantas pastas como 
+o número de indicadores a gerar, em cada uma são guardadas as página de nomes referentes aos parâmetros
+dos indicadores calculados.
+

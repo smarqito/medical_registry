@@ -1,0 +1,78 @@
+Para apresentar os indicadores no formato \textit{HTML}, recorreu-se à construção de \textit{templates} prévios
+para definir o \textit{layout} da informação.
+Não obstante a aparência, estes ficheiros auxiliares têm, adicionalmente, o propósito de definir a 
+informação a ser inserida no indicador.
+
+Neste sentido, todos os parâmetros que vão ser inseridos de forma dinâmica serão representadas no \textit{template} entre dois pares de
+chavetas: 
+\begin{minted}{html}
+<!DOCTYPE html>
+<html>
+    ...
+    {{PARÂMETRO_A_INSERIR}}
+    ...
+</html>
+\end{minted}
+
+\dots especificando, então, que no lugar desta \textit{tag} vai ser inserida informação.
+
+Contudo, dado a alguns indicadores terem um tamanho indefinido de elementos, dependentes da informação incluída no \textit{dataset}, será necessária a \textbf{modularização} 
+do \textit{template} a partir da criação de \textit{sub-templates}.
+Estes irão agregar a estrutura dos elementos de número variável a serem inseridos no ficheiro.
+Neste caso, especifica-se na \textit{tag} o ficheiro \textit{HTML} correspondente à \textit{sub-template}:
+\begin{minted}{html}
+<!DOCTYPE html>
+<html>
+    ...HTML_PRINCIPAL...
+
+    {{SUB_TEMPLATE, PARÂMETRO_A_INSERIR}}
+
+    ...HTML_PRINCIPAL...
+</html>
+\end{minted}
+
+\dots o que permite a inserção no \textit{HTML_PRINCIPAL} de N elementos, com o formato definido em \textit{SUB_TEMPLATE}.
+Deste modo, empurra-se a responsabilidade de criar a estrutura de cada elemento para um ficheiro \textit{HTML} auxiliar.
+
+Como todos os módulos seguem este processo, foi procurado um método que permitiria generalizar o método como os \textit{templates} são populados.
+No âmbito desta abstração adicional, foi criado o ficheiro \textit{templates.py} que engloba os métodos a possibilitar este novo nível de \textit{templating}.
+
+Neste sentido, haverá funções como:
+\begin{itemize}
+    \item[\textit{load_templates}]Para criar um dicionário a partir do \textit{template}.
+    \item[\textit{template}]Para criar uma string com a informação nos dicionários, correspondente a um ficheiro \textit{HTML}.
+\end{itemize}
+
+Neste sentido, para fazer o \textit{load} do(s) template(s), em cada módulo é necessário estabelecer o \textit{path} e os ficheiros a serem usados:
+\begin{minted}{python}
+dicionario = load_templates(f'template/{file_name}/', 
+            {
+                'main': 'index_file.html',
+                'ficheiro_auxiliar': 'auxiliar.html',
+                ...
+            })
+\end{minted} 
+
+\dots especifica-se com a nomencaltura \textit{main} o \textit{template} principal, colocado os aliases dos restantes \textit{sub-templates}, como 
+se encontram especificados na \textit{main}.
+A escolha de inserir estes elementos num dicionário vem da sua fácil organização e manipulação.
+
+Para popular estes \textit{templates}, será, adicionalmente, necessário um dicionário preenchido com os valores a substituir.
+Deste modo, apresenta-se como:
+\begin{minted}{python}
+    ficheiro_como_string = template(DICIONARIO_PARÂMETROS, "main", DICIONARIO_TEMPLATES)
+\end{minted}
+
+\dots no qual esepcifica-se a \textit{template} principal.
+
+É no interior deste método que se faz a substituição das \textit{tags} pelos respetivos parâmetros.
+Como existe uma unanimidade na forma como os parâmetros estão apresentados, as \textbf{expressões regulares} definidas
+serão suficientes para se reutilizar este método para todos os \textit{templates}.
+
+\begin{minted}{python}
+    param = r'\{\{\w+\}\}'
+    c_sub_template = r'\{\{(\w+), (\w+)\}\}'
+\end{minted}
+
+Adicionalmente, recorreu-se a \textbf{polimorfismo} nesta função para permitir distribuir responsabilidades, entre escrever dicionários, listas ou parâmetros.
+Deste modo, este método encontra-se preparado para agregar estruturas de dados aninhadas.
