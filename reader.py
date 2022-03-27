@@ -65,13 +65,13 @@ def reader():
     generate_Index(jogadores.keys(), jogadores, f'{output}/athletes.html')
 
     index = {
-        'd': 'Não gerado',
-        'g': 'Não gerado',
-        'i': 'Não gerado',
-        'r': 'Não gerado',
-        'f': 'Não gerado',
-        'l': 'Não gerado',
-        'm': 'Não gerado',
+        'd': '',
+        'g': '',
+        'i': '',
+        'r': '',
+        'f': '',
+        'l': '',
+        'm': '',
     }
     for opt in opts:
         if opts[opt]:

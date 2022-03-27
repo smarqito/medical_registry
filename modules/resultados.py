@@ -1,20 +1,22 @@
 from modules.athl import *
-import math 
+import math
 from datetime import datetime
 from modules.globals import create_folder_output, get_output
 
 resultados = {}
 
-def read_Resultados(j : Jogador) -> dict:
+
+def read_Resultados(j: Jogador) -> dict:
     data = j.date
     resultado = j.resultado
     if not resultados.__contains__(data.year):
-                resultados[data.year] = {"aptos": [], "naoAptos": []}
+        resultados[data.year] = {"aptos": [], "naoAptos": []}
     res = resultado == "true"
     if res:
         resultados[data.year]["aptos"].append(j.id)
     else:
         resultados[data.year]["naoAptos"].append(j.id)
+
 
 def generate_Resultados(jogadores):
     output = get_output()
@@ -47,7 +49,6 @@ def generate_Resultados(jogadores):
                                          'rowResultsTemp': 'row.html',
                                          'main': 'index.html'
                                      })
-
 
     res = templates.template(cont, "main", temps)
     w = open(f"{output}/{file_name}.html", "w")
