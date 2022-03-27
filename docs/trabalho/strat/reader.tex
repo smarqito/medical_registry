@@ -1,0 +1,34 @@
+O \textit{Reader} é responsável pela leitura linha à linha do ficheiro
+csv e pelo armazenamento de todos os dados inerentes ao indicadores estatísticos
+gerados.
+
+A cada linha lida do ficheiro são atualizadas variáveis que foram criadas com o intuito de
+armazenar as informações relativas a cada indicador:
+\begin{itemize}
+    \item É criada uma página por cada atleta onde é possível consultar todos as 
+    informações relativas a este
+    \item Verifica-se se a data lida é uma data extrema, em caso positivo, é adicionado
+    o indice do atleta a dicionário do tipo {data mínima : [ids], data máxima : [ids]}
+    \item Com base no ano e no género lido é adicionado o indice do atleta
+    a um dicionário do tipo {ano : {Masculino : [ids], Feminino : [ids]}}
+    \item Com base na idade e no género lido é adicionado o indice do atleta
+    a um dicionário do tipo {Mais ou igual a 35 anos : {Masculino : [ids], 
+    Feminino : [ids]}, Menos que 35 anos : {Masculino : [ids], 
+    Feminino : [ids]}}
+    \item Com base na morada lida é adicionado o indice do atleta
+    a um dicionário do tipo {morada : [ids]}
+    \item Com base no ano e no resultado lido é adicionado o indice do atleta
+    a um dicionário do tipo {ano : {Apto : [ids], Não Apto : [ids]}}
+    \item Com base no ano e no estatuto de federado lido é adicionado o indice do atleta
+    a um dicionário do tipo {ano : {Federado : [ids], Não Federado : [ids]}}
+    \item Com base no ano e na modalidade lido é adicionado o indice do atleta
+    a um dicionário do tipo {ano : {modalidade : [ids]}} e a modalidade a um 
+    \textit{set} de modalidades
+\end{itemize}
+
+As variáveis criadas no decorrer da leitura são mais tarde percorridas na geração dos
+indicadores, assunto que será abordado em \ref{modulos}.
+
+A lista de ids são guardadas para ser possível apresentar as informações que permitiu
+criar aquele indicador, nomeadamente uma lista ordenada alfabeticamente pelos nomes dos 
+atletas onde é permitido consultar a página individual de cada um.
