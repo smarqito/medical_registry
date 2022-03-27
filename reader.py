@@ -32,14 +32,9 @@ def reader():
             jogadores[j.id] = j
             gd = m.groupdict()
             generate_athelete(gd)
-            # #inde.write(f'<li><a href="athlete/{gd["id"]}.html">{gd["primeiro"]}, {gd["ultimo"]}</a></li>')
-            # for k in gd.keys():
-            #     templat = sub(rf'{{{{{k}}}}}', gd[k], templat)
-            # nathl = open(f'athlete/{gd["id"]}.html', 'w')
-            # nathl.write(templat)
 
             # Datas Extremas
-            #read_dates(j, data)
+            read_dates(j, data)
 
             # Género
             read_Gen(j, data, m.group("genero"))
@@ -61,7 +56,7 @@ def reader():
 
         templ.close()
 
-    #generate_dates(jogadores, inde)
+    generate_dates(jogadores, inde)
     generate_DistGen(jogadores, inde)
     generate_IdadeGen(jogadores, inde)
     generate_Resultados(jogadores, inde)

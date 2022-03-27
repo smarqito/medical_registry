@@ -5,19 +5,21 @@ from templates import *
 
 distPorDate = {}
 
-dateMin: datetime
-dateMax: datetime
+dateMin = datetime.max.date()
+dateMax =  datetime.min.date()
 
 def read_dates(j: Jogador, data: datetime):
-    if data < dataMin:
-        dataMin = data
+    global dateMin
+    global dateMax
+    if data < dateMin:
+        dateMin = data
         distPorDate["Min"] = [j.id]
-    elif data > dataMax:
-        dataMax = data
+    elif data > dateMax:
+        dateMax = data
         distPorDate["Max"] = [j.id]
-    elif data == dataMin:
+    elif data == dateMin:
         distPorDate["Min"].append(j.id)
-    elif data == dataMax:
+    elif data == dateMax:
         distPorDate["Max"].append(j.id)
 
 def generate_dates(jogadores, inde):
@@ -29,10 +31,10 @@ def generate_dates(jogadores, inde):
     generate_Index(distPorDate["Max"], jogadores, "www/datas_extremas/dataMax.html")
 
     cont = {}
-    cont['MinRef'] = '"dataMin.html"'
-    cont['dataMin'] = dataMin
-    cont['MaxRef'] = '"dataMax.html"'
-    cont['dataMax'] = dataMax
+    cont['MinRef'] = '"www/datas_extremas/dataMin.html"'
+    cont['dataMin'] = dateMin
+    cont['MaxRef'] = '"www/datas_extremas/dataMax.html"'
+    cont['dataMax'] = dateMax
 
     temps = templates.load_templates('template/datas_extremas/', {
         'main': 'index.html'

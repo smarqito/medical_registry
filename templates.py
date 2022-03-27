@@ -29,7 +29,7 @@ def template(obj: dict, temp: str) -> str:
     \t obj[key] must match with template {{key}}
     \tWill replace {{key}} w/ obj[key] value
     '''
-    print("template dict:", obj)
+    #print("template dict:", obj)
     for k in obj:
         temp = sub(rf'{{{{{k}}}}}', str(obj[k]), temp)
     return temp
@@ -54,14 +54,14 @@ def template(obj, temp, temps: dict) -> str:
         \tIf is not a list, behaves the same way as simple template
     '''
     res = temps[temp]
-    print("template:", temp)
+    #print("template:", temp)
     iterable = findall(r'\{\{(\w+), (\w+)\}\}', res)
     
     for t, key in iterable:
         if type(obj) is dict:
-            print("antes dict")
+            #print("antes dict")
             found = template(obj[key], t, temps) # itera todos os que tem templates
-            print("depois dict")
+            #print("depois dict")
             res = sub(rf'{{{{{t}, {key}}}}}', found, res) # preenche a template
         elif type(obj) is list:
             found = ''
