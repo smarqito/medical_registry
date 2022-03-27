@@ -60,7 +60,7 @@ def reader():
             read_Fed(j, data, m.group("federado"))
 
             # Modalidade
-            read_Mod(j, data, m.group("modalidade"))
+            read_Mod(j)
     
     #falta ordenar
     generate_Index(jogadores.keys(), jogadores, f'{output}/athletes.html')

@@ -5,7 +5,9 @@ from modules.globals import create_folder_output, get_output
 distPorMod = {}
 modalidades = []
 
-def read_Mod(j : Jogador, data : datetime, mod : str):
+def read_Mod(j : Jogador):
+    data = j.date
+    mod = j.modalidade
     if not distPorMod.__contains__(data.year):
         distPorMod[data.year] = {}
     if not distPorMod[data.year].__contains__(mod):
