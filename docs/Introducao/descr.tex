@@ -1,0 +1,46 @@
+O enunciado escolhido, \textbf{Processador de Registos de Exames Médicos Desportivos} (EMD), propõe a criação de um 
+filtro de texto para registos de exames médicos realizados a atletas, bem como um \textit{website} para apresentar 
+essa informação.
+
+\subsubsection{Filtro de Texto}
+
+Com o auxílio da biblioteca \textbf{re} e \textbf{ply}, pretende-se usufruir do uso de \textbf{expressões regulares} e extrair de \textbf{datasets}
+os parâmetros desejados, codificados em padrões gerais encontrados nos ficheiros \textit{input} fornecidos.
+
+No contexto do enunciado, o ficheiro fornecido é do tipo \textit{CSV}.
+Este traduz as informações essenciais sobre os atletas que realizaram exames médicos, sendo o \textit{layout}:
+
+\begin{minted}[breaklines]{bash}
+    _id,index,dataEMD,nome/primeiro,nome/último,idade,género,morada,modalidade,clube,email,federado,resultado
+\end{minted}
+
+\dots este \textit{layout} também corresponde à primeira linha do ficheiro, de modo a traduzir a ordem como as informações 
+encontram-se organizadas.
+
+Através de um ou mais programas em \textit{Python}, pretende-se criar filtros que, através destes padrões, extraem os 
+parâmetros a serem usados para criar o \textit{website} final.
+Eventualmente, encontrar o melhor método para armazenar toda a informação envolvente neste processo.
+
+\subsubsection{Website}
+
+Com toda a informação do \textit{dataset} estraída, deve ser apresentado na forma de páginas \textit{HTML} os conjuntos de 
+informação sobre todos os atletas e os seus respetivos exames médicos, os \textbf{indicadores estatísticos}. 
+
+Neste sentido, foi proposto no enunciado um grupo de indicadores a serem incluídos no \textit{website}:
+\begin{itemize}
+    \item Datas extremas dos registos no \textit{dataset}.
+    \item Distribuição por género em cada ano e no total.
+    \item Distribuição por modalidade em cada ano e no total.
+    \item Distribuição por idade e género (para a idade, considera apenas 2 escalões: < 35 anos e >= 35).
+    \item Distribuição por morada.
+    \item Distribuição por estatuto de federado em cada ano.
+    \item Percentagem de aptos e não aptos por ano.
+\end{itemize}
+
+\dots sendo que estes devem ser expressos na página principal, no \textit{index.html}, de uma forma concisa e coerente.
+
+Adicionalmente, para todos os indicadores deve existir uma \textit{hiperligação} para a página do indicador. 
+Esta irá traduzir toda a informação que foi usada para o construir, ordenada, geralmente, de modo alfabético.
+
+Assim, a apresentação do \textit{website} será ao critério do grupo, sendo somente necessário que a apresentação 
+encontre-se presente na sua totalidade, com um acréscimo dado à organização desta no ambiente \textit{HTML}.
