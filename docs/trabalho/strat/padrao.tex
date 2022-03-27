@@ -5,7 +5,7 @@ capaz de os agrupar.
 \begin{minted}[breaklines]{bash}
     (?P<id>\w+),(?P<index>\d+),(?P<date>\d{4}-\d{2}-\d{2}),(?P<primeiro>\w+),
     (?P<ultimo>\w+),(?P<idade>\d+),(?P<genero>[MF]),(?P<morada>\w+),(?P<modalidade>\w+),
-    (?P<clube>\w+),(?P<email>.*?),(?P<federado>[true|false]),(?P<resultado>[true|false])
+    (?P<clube>\w+),(?P<email>.*?),(?P<federado>(true|false)),(?P<resultado>(true|false))
 \end{minted}
 
 Na construção da expressão regular foram utilizados os parênteses e a flag $?P<>$
