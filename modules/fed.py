@@ -1,7 +1,8 @@
 import re
 from datetime import datetime
-from athl import*
+from modules.athl import*
 from templates import load_templates, template
+from modules.globals import create_folder, output
 
 distPorFed = {}
 
@@ -15,32 +16,39 @@ def read_Fed(j : Jogador, data : datetime, federado : str):
     else:
         distPorFed[data.year]["NFed"].append(j.id)
 
-def generate_fed(jogadores, inde):
+def generate_fed(jogadores):
+    global output
+    file_name = 'federado'
+    create_folder(file_name)
+    
     cont = {}
     cont['federados'] = []
 
     for ano in distPorFed:
         # Ref Federados
-        generate_Index(distPorFed[ano]["Fed"], jogadores, f"www/federado/fed_{ano}.html")
+        generate_Index(distPorFed[ano]["Fed"], jogadores, f"{output}/{file_name}/fed_{ano}.html")
 
         # Ref Nao Federados
-        generate_Index(distPorFed[ano]["NFed"], jogadores, f"www/federado/naoFed_{ano}.html")
+        generate_Index(distPorFed[ano]["NFed"], jogadores, f"{output}/{file_name}/naoFed_{ano}.html")
 
         t = len(distPorFed[ano]["Fed"]) + len(distPorFed[ano]["NFed"])
         new_ano = {'ano': ano}
 
         new_ano['ano'] = ano
-        new_ano['FedRef'] = f'www/federado/fed_{ano}.html'
+        new_ano['FedRef'] = f'{output}/{file_name}/fed_{ano}.html'
         new_ano['Federado'] = len(distPorFed[ano]["Fed"])
-        new_ano['NFedRef'] = f'www/federado/naoFed_{ano}.html'
+        new_ano['NFedRef'] = f'{output}/{file_name}/naoFed_{ano}.html'
         new_ano['NaoFederado'] = len(distPorFed[ano]["NFed"])
 
         cont['federados'].append(new_ano)
 
-    temps = load_templates('template/federado/', {
+    temps = load_templates(f'template/{file_name}/', {
         'federadoPorAno': 'row.html',
         'main': 'index.html'
     })
 
     res = template(cont, "main", temps)
-    inde.write(res)
+    w = open(f"{output}/{file_name}.html", "w")
+    w.write(res)
+    w.close
+    return res

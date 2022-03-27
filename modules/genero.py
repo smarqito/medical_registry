@@ -1,42 +1,48 @@
-from athl import *
+from modules.athl import *
 from datetime import datetime
-
+from modules.globals import create_folder, output
 distPorGen = {}
 
-def read_Gen(j : Jogador, data : datetime, gen : str):
+
+def read_Gen(j: Jogador, data: datetime, gen: str):
     if not distPorGen.__contains__(data.year):
         distPorGen[data.year] = {"M": [], "F": []}
 
     distPorGen[data.year][gen].append(j.id)
 
-def generate_DistGen(jogadores, inde):
+
+def generate_DistGen(jogadores):
+    global output
+    file_name = 'genero'
+    create_folder(file_name)
     cont = {}
     cont['rows'] = []
     for membro in sorted(distPorGen):
         # Ref Masculino
         generate_Index(distPorGen[membro]["M"], jogadores,
-                       "www/genero/masc_{}.html".format(membro))
+                       f"{output}/{file_name}/masc_{membro}.html")
 
         # Ref Femenino
         generate_Index(distPorGen[membro]["F"], jogadores,
-                       "www/genero/fem_{}.html".format(membro))
+                       f"{output}/{file_name}/fem_{membro}.html")
 
         new_ano = {'ano': membro}
-        new_ano['refM'] = '"www/genero/masc_{}.html"'.format(membro)
-        new_ano['refF'] = '"www/genero/fem_{}.html"'.format(membro)
+        new_ano['refM'] = f'"{output}/{file_name}/masc_{membro}.html"'
+        new_ano['refF'] = f'"{output}/{file_name}/fem_{membro}.html"'
         new_ano['TotalM'] = len(distPorGen[membro]["M"])
         new_ano['TotalF'] = len(distPorGen[membro]["F"])
         new_ano['Total'] = len(
             distPorGen[membro]["M"]) + len(distPorGen[membro]["F"])
         cont["rows"].append(new_ano)
 
-    temps = templates.load_templates('template/genero/',
+    temps = templates.load_templates(f'template/{file_name}/',
                                      {
                                          'rowsGenTemp': 'row.html',
                                          'main': 'index.html'
                                      })
 
-    #w = open("gen.html", "w")
     res = templates.template(cont, "main", temps)
-    inde.write(res)
-    #w.close
+    w = open(f"{output}/{file_name}.html", "w")
+    w.write(res)
+    w.close
+    return res

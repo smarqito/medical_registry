@@ -1,6 +1,6 @@
 from datetime import datetime
-from typing import Tuple
-from athl import *
+from modules.athl import *
+from modules.globals import create_folder, output
 
 distPorMod = {}
 modalidades = []
@@ -15,10 +15,13 @@ def read_Mod(j : Jogador, data : datetime, mod : str):
         modalidades.append(mod)
 
         
-def generate_DistMod():
+def generate_DistMod(jogadores):
     '''
     _modalidades: { ano: { modalidade: [ids_jog] } }
     '''
+    global output
+    file_name = 'modalidade'
+    create_folder(file_name)
     cont = {}  # conteudo html
     cont['anos_header'] = []
     for ano in sorted(distPorMod):
@@ -38,13 +41,14 @@ def generate_DistMod():
 
             if (l != 0):
                 generate_Index(
-                    distPorMod[ano][mod], "www/modalidade/{}_{}.html".format(mod, ano))
+                    distPorMod[ano][mod], jogadores, f"{output}/{file_name}/{mod}_{ano}.html")
 
             new_ano['total'] = l
             new_ano['ref'] = f'modalidade/{mod}_{ano}.html'
             temp['colls'].append(new_ano)
         cont['rows'].append(temp)
     '''
+    Estrutura dos dados para templating
     {
         anos_header : [inteiros]
         rows: [{
@@ -57,7 +61,7 @@ def generate_DistMod():
             }]
     }
     '''
-    temps = templates.load_templates('template/modalidade/',
+    temps = templates.load_templates(f'template/{file_name}/',
                                      {
                                          'ano_colunas': 'ano_colunas.html',
                                          'row': 'row.html',
@@ -65,7 +69,8 @@ def generate_DistMod():
                                          'main': 'index.html'
                                      })
 
-    w = open("www/modalidades.html", "w")
+    w = open(f"{output}/{file_name}/index.html", "w")
     res = templates.template(cont, "main", temps)
     w.write(res)
     w.close()
+    return res

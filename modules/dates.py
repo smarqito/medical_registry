@@ -1,7 +1,7 @@
-import re
 from datetime import datetime
-from athl import *
+from modules.athl import *
 from templates import *
+from modules.globals import create_folder, output
 
 distPorDate = {}
 
@@ -22,23 +22,29 @@ def read_dates(j: Jogador, data: datetime):
     elif data == dateMax:
         distPorDate["Max"].append(j.id)
 
-def generate_dates(jogadores, inde):
+def generate_dates(jogadores):
+    global output
+    file_name = 'datas_extremas'
+    create_folder(file_name)
     
     # Ref para os atletas com exames na data mínima
-    generate_Index(distPorDate["Min"], jogadores, "www/datas_extremas/dataMin.html")
+    generate_Index(distPorDate["Min"], jogadores, f"{output}/{file_name}/dataMin.html")
 
     # Ref para os atletas com exames na data máxima
-    generate_Index(distPorDate["Max"], jogadores, "www/datas_extremas/dataMax.html")
+    generate_Index(distPorDate["Max"], jogadores, f"{output}/{file_name}/dataMax.html")
 
     cont = {}
-    cont['MinRef'] = '"www/datas_extremas/dataMin.html"'
+    cont['MinRef'] = f'"{output}/{file_name}/dataMin.html"'
     cont['dataMin'] = dateMin
-    cont['MaxRef'] = '"www/datas_extremas/dataMax.html"'
+    cont['MaxRef'] = f'"{output}/{file_name}/dataMax.html"'
     cont['dataMax'] = dateMax
 
-    temps = templates.load_templates('template/datas_extremas/', {
+    temps = templates.load_templates(f'template/{file_name}/', {
         'main': 'index.html'
     })
 
     res = template(cont, "main", temps)
-    inde.write(res)    
+    w = open(f"{output}/{file_name}.html", "w")
+    w.write(res)
+    w.close
+    return res

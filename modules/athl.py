@@ -1,51 +1,40 @@
 #!/usr/bin/env python3
-#----------------------------------------------------------------
-# Created by: José Malheiro, Marco Sousa e Miguel Fernandes
-# Created date: 2022-03-22
-# Version = '1.0'
-#----------------------------------------------------------------
-""" Gera um indice de atletas por ordem lexicografica do nome """
-#----------------------------------------------------------------
-from re import *
-import sys
-from os import mkdir, path
+import templates
+from modules.jogador import *
 
-reg = r'(?P<id>\w+),(?P<index>\d+),(?P<date>\d{4}-\d{2}-\d{2}),(?P<primeiro>\w+),(?P<ultimo>\w+),(?P<idade>\d+),(?P<genero>[MF]),(?P<morada>\w+),(?P<modalidade>\w+),(?P<clube>\w+),(?P<email>.*?),(?P<federado>\w+),(?P<resultado>\w+)'
+def generate_athelete(gd : dict):
+    cont = {}
+    for k in gd.keys():
+        cont[k] = gd[k]
 
-f = open("assets/emd.csv")
-if not path.isdir('www/athlete'):
-    mkdir('www/athlete')
+    temps = templates.load_templates('template/athlete/',
+                                     {
+                                         'main': 'athlete.html'
+                                     })
 
-def get_key(match):
-    gd = match.groupdict()
-    return gd["primeiro"] + " " + gd["ultimo"]
+    res = templates.template(cont, "main", temps)
+    nathl = open(f'www/athlete/{gd["id"]}.html', 'w')
+    nathl.write(res)
+    nathl.close()
 
-def reader():
-    todos = []
-    inde = open("www/athlete/index.html", "w")
-    inde.write('<ul>')
-    for l in f.readlines():
-        m = match(reg, l)
-        if m:
-            todos.append(m)
-    ## alinha
-    todos.sort(key=get_key)
-    
-    templ = open("template/athlete.html")
-    templat = templ.read()
-    
-    for m in todos:
-        atleta = templat
-        gd = m.groupdict()
-        
-        inde.write(f'<li><a href="athlete/{gd["id"]}.html">{gd["primeiro"]}, {gd["ultimo"]}</a></li>')
-        for k in gd.keys():
-            atleta = sub(rf'{{{{{k}}}}}', gd[k], atleta)
 
-        nathl = open(f'www/athlete/{gd["id"]}.html', 'w')
-        nathl.write(atleta)
-    templ.close()
-    inde.write('</ul>')
-    inde.close()
+def generate_Index(lista, jogadores, filePath):
+    cont = {}
+    cont['rows'] = []
+    for m in lista:
+        new_ind = {'ID': m}
+        new_ind["Primeiro"] = jogadores[m].nome
+        new_ind["Ultimo"] = jogadores[m].ultimo
+        cont['rows'].append(new_ind)
+    temps = templates.load_templates('template/common/',
+                                     {
+                                         'rowIndex': 'rowIndex.html',
+                                         'main': 'index.html'
+                                     })
+    res = templates.template(cont, "main", temps)
+    w = open(filePath, "w")
+    w.write(res)
+    w.close()
 
-reader()
+
+
