@@ -1,5 +1,5 @@
 from modules.athl import *
-from modules.globals import create_folder, output
+from modules.globals import create_folder_output, output
 
 
 distPorIdade = {"MaisOuIgual35": {"M": [], "F": []},
@@ -15,7 +15,7 @@ def read_Idade(j : Jogador, idade : int, genero : str) -> dict:
 def generate_IdadeGen(jogadores):
     global output
     file_name = 'idade'
-    create_folder(file_name)
+    create_folder_output(file_name)
 
     # Ref Masculino >=35
     generate_Index(distPorIdade["MaisOuIgual35"]

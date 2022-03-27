@@ -1,6 +1,6 @@
 from datetime import datetime
 from modules.athl import *
-from modules.globals import create_folder, output
+from modules.globals import create_folder_output, output
 
 distPorMod = {}
 modalidades = []
@@ -21,7 +21,7 @@ def generate_DistMod(jogadores):
     '''
     global output
     file_name = 'modalidade'
-    create_folder(file_name)
+    create_folder_output(file_name)
     cont = {}  # conteudo html
     cont['anos_header'] = []
     for ano in sorted(distPorMod):

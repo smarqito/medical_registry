@@ -1,7 +1,7 @@
 from datetime import datetime
 from modules.athl import *
 from templates import *
-from modules.globals import create_folder, output
+from modules.globals import create_folder_output, output
 
 distPorDate = {}
 
@@ -25,7 +25,7 @@ def read_dates(j: Jogador, data: datetime):
 def generate_dates(jogadores):
     global output
     file_name = 'datas_extremas'
-    create_folder(file_name)
+    create_folder_output(file_name)
     
     # Ref para os atletas com exames na data mínima
     generate_Index(distPorDate["Min"], jogadores, f"{output}/{file_name}/dataMin.html")

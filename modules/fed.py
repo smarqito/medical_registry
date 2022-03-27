@@ -2,7 +2,7 @@ import re
 from datetime import datetime
 from modules.athl import*
 from templates import load_templates, template
-from modules.globals import create_folder, output
+from modules.globals import create_folder_output, output
 
 distPorFed = {}
 
@@ -19,7 +19,7 @@ def read_Fed(j : Jogador, data : datetime, federado : str):
 def generate_fed(jogadores):
     global output
     file_name = 'federado'
-    create_folder(file_name)
+    create_folder_output(file_name)
     
     cont = {}
     cont['federados'] = []
