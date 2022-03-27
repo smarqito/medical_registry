@@ -30,9 +30,9 @@ def generate_fed(jogadores, inde):
         new_ano = {'ano': ano}
 
         new_ano['ano'] = ano
-        new_ano['FedRef'] = f'fed_{ano}.html'
+        new_ano['FedRef'] = f'www/federado/fed_{ano}.html'
         new_ano['Federado'] = len(distPorFed[ano]["Fed"])
-        new_ano['NFedRef'] = f'naoFed_{ano}.html'
+        new_ano['NFedRef'] = f'www/federado/naoFed_{ano}.html'
         new_ano['NaoFederado'] = len(distPorFed[ano]["NFed"])
 
         cont['federados'].append(new_ano)

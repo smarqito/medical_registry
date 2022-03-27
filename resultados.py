@@ -29,8 +29,8 @@ def generate_Resultados(jogadores, inde):
             len(resultados[ano]["naoAptos"])
 
         new_ano = {'ano': ano}
-        new_ano['AptosRef'] = 'aptos_{}.html"'.format(ano)
-        new_ano['NaoAptosRef'] = 'naoAptos_{}.html"'.format(ano)
+        new_ano['AptosRef'] = '"www/resultados/aptos_{}.html"'.format(ano)
+        new_ano['NaoAptosRef'] = '"www/resultados/naoAptos_{}.html"'.format(ano)
         new_ano['Aptos'] = math.ceil((len(resultados[ano]["aptos"]) / t) * 100)
         new_ano['NaoAptos'] = math.ceil((
             len(resultados[ano]["naoAptos"]) / t) * 100)

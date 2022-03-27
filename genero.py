@@ -22,8 +22,8 @@ def generate_DistGen(jogadores, inde):
                        "www/genero/fem_{}.html".format(membro))
 
         new_ano = {'ano': membro}
-        new_ano['refM'] = '"masc_{}.html"'.format(membro)
-        new_ano['refF'] = '"fem_{}.html"'.format(membro)
+        new_ano['refM'] = '"www/genero/masc_{}.html"'.format(membro)
+        new_ano['refF'] = '"www/genero/fem_{}.html"'.format(membro)
         new_ano['TotalM'] = len(distPorGen[membro]["M"])
         new_ano['TotalF'] = len(distPorGen[membro]["F"])
         new_ano['Total'] = len(
