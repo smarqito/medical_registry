@@ -1,0 +1,26 @@
+No contexto do problema em causa, será necessário abordar dois pontos principais:
+\begin{itemize}
+    \item Extração e armazenamento da informação do ficheiro \textit{CSV}.
+    \item Criação de um \textit{website} com os indicadores necessários.
+\end{itemize}
+
+Para extrair a informação do ficheiro \textit{CSV}, como especificado em \ref{subsubsec:padrao}, recorreu-se ao uso de \textbf{expressões regulares} para retirar
+de uma linha os parâmetros necessários.
+Usando este método para todo o ficheiro, é possível obter, de forma rápida e metódica, os registos de todos os atletas 
+do \textit{dataset}.
+Com a informação necessária a cada indicador agregada num \textit{dicionário} próprio, será possível manipular 
+livremente todos os parâmetros a serem usados para construir a página principal e as respetivas \textit{sub-páginas}.
+
+No âmbito de modularizar o projeto, e construir uma \textbf{arquitetura} mais organizada, o trabalho associado à criação das páginas \textit{HTMl} encontra-se 
+particionado por vários ficheiros. 
+Neste sentido, cada \textbf{indicador estatístico} corresponderá ao seu \textbf{módulo}, um programa em \textit{Python} responsável por gerá-lo, sendo uma análise mais aprofundada
+sobre este tópico localizada em \ref{}.
+
+Não obstante os múltíplos programas criados para popular o \textit{index.html}, todo este trabalho irá localizar-se no ficheiro \textit{reader.py}. 
+Este irá simultaneamente agregar toda a informação a ser usada para cada indicador e usá-la so chamar os módulos criados, culminando na criação do 
+\textit{index.html} (\ref{}). 
+
+\dots todos os módulos terão por base um ou mais \textit{templates HTML}, sendo que cada indicador tem a sua própria estrutura de apresentação (\ref{subsubsec:templates}).
+
+Com a utilização dos \textit{templates} previamente criados, a solução tenta abstrair a construção dos indicadores através de \textit{templating}.
+Deste modo, permite-se construí-los metodicamente a partir dos \textit{templates} criados, permitindo a adição de novos indicadores sem complicações de construção.
