@@ -1,11 +1,13 @@
 from modules.athl import *
-from modules.globals import create_folder_output, output
+from modules.globals import create_folder_output, get_output
 
 
 distPorIdade = {"MaisOuIgual35": {"M": [], "F": []},
                 "Menos35": {"M": [], "F": []}}
 
-def read_Idade(j : Jogador, idade : int, genero : str) -> dict:
+def read_Idade(j : Jogador) -> dict:
+    idade = int(j.idade)
+    genero = j.genero
     if idade >= 35:
         distPorIdade["MaisOuIgual35"][genero].append(j.id)
     else:
@@ -13,7 +15,7 @@ def read_Idade(j : Jogador, idade : int, genero : str) -> dict:
     return distPorIdade
 
 def generate_IdadeGen(jogadores):
-    global output
+    output = get_output()
     file_name = 'idade'
     create_folder_output(file_name)
 
@@ -33,16 +35,16 @@ def generate_IdadeGen(jogadores):
 
     # Substituções das tags do template
     cont = {}
-    cont['Mais35refM'] = f'"{output}/{file_name}/mais35Masc.html"'
+    cont['Mais35refM'] = f'"{file_name}/mais35Masc.html"'
     cont['Mais35TotalM'] = len(distPorIdade["MaisOuIgual35"]["M"])
-    cont['Mais35refF'] = f'"{output}/{file_name}/mais35Fem.html"'
+    cont['Mais35refF'] = f'"{file_name}/mais35Fem.html"'
     cont['Mais35TotalF'] = len(distPorIdade["MaisOuIgual35"]["F"])
 
     cont['Mais35Total'] = len(
         distPorIdade["MaisOuIgual35"]["M"]) + len(distPorIdade["MaisOuIgual35"]["F"])
-    cont['Menos35refM'] = f'{output}/{file_name}/menos35Masc.html"'
+    cont['Menos35refM'] = f'"{file_name}/menos35Masc.html"'
     cont['Menos35TotalM'] = len(distPorIdade["Menos35"]["M"])
-    cont['Menos35refF'] = f'{output}/{file_name}/menos35Fem.html"'
+    cont['Menos35refF'] = f'"{file_name}/menos35Fem.html"'
     cont['Menos35TotalF'] = len(distPorIdade["Menos35"]["F"])
     cont['Menos35Total'] = len(
         distPorIdade["Menos35"]["M"]) + len(distPorIdade["Menos35"]["F"])
@@ -56,3 +58,4 @@ def generate_IdadeGen(jogadores):
     w = open(f"{output}/{file_name}.html", "w")
     w.write(res)
     w.close
+    return res

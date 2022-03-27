@@ -1,11 +1,13 @@
 from datetime import datetime
 from modules.athl import *
-from modules.globals import create_folder_output, output
+from modules.globals import create_folder_output, get_output
 
 distPorMod = {}
 modalidades = []
 
-def read_Mod(j : Jogador, data : datetime, mod : str):
+def read_Mod(j : Jogador):
+    data = j.date
+    mod = j.modalidade
     if not distPorMod.__contains__(data.year):
         distPorMod[data.year] = {}
     if not distPorMod[data.year].__contains__(mod):
@@ -19,7 +21,7 @@ def generate_DistMod(jogadores):
     '''
     _modalidades: { ano: { modalidade: [ids_jog] } }
     '''
-    global output
+    output = get_output()
     file_name = 'modalidade'
     create_folder_output(file_name)
     cont = {}  # conteudo html
@@ -44,7 +46,7 @@ def generate_DistMod(jogadores):
                     distPorMod[ano][mod], jogadores, f"{output}/{file_name}/{mod}_{ano}.html")
 
             new_ano['total'] = l
-            new_ano['ref'] = f'www/modalidade/{mod}_{ano}.html'
+            new_ano['ref'] = f'{file_name}/{mod}_{ano}.html'
             temp['colls'].append(new_ano)
         cont['rows'].append(temp)
     '''
@@ -69,7 +71,7 @@ def generate_DistMod(jogadores):
                                          'main': 'index.html'
                                      })
 
-    w = open(f"{output}/{file_name}/index.html", "w")
+    w = open(f"{output}/{file_name}.html", "w")
     res = templates.template(cont, "main", temps)
     w.write(res)
     w.close()

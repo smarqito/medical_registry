@@ -1,10 +1,11 @@
 from modules.athl import *
-from datetime import datetime
-from modules.globals import create_folder_output, output
+from modules.globals import create_folder_output, get_output
 distPorGen = {}
 
 
-def read_Gen(j: Jogador, data: datetime, gen: str):
+def read_Gen(j: Jogador):
+    data = j.date
+    gen = j.genero
     if not distPorGen.__contains__(data.year):
         distPorGen[data.year] = {"M": [], "F": []}
 
@@ -12,7 +13,7 @@ def read_Gen(j: Jogador, data: datetime, gen: str):
 
 
 def generate_DistGen(jogadores):
-    global output
+    output = get_output()
     file_name = 'genero'
     create_folder_output(file_name)
     cont = {}
@@ -27,8 +28,8 @@ def generate_DistGen(jogadores):
                        f"{output}/{file_name}/fem_{membro}.html")
 
         new_ano = {'ano': membro}
-        new_ano['refM'] = f'"{output}/{file_name}/masc_{membro}.html"'
-        new_ano['refF'] = f'"{output}/{file_name}/fem_{membro}.html"'
+        new_ano['refM'] = f'"{file_name}/masc_{membro}.html"'
+        new_ano['refF'] = f'"{file_name}/fem_{membro}.html"'
         new_ano['TotalM'] = len(distPorGen[membro]["M"])
         new_ano['TotalF'] = len(distPorGen[membro]["F"])
         new_ano['Total'] = len(

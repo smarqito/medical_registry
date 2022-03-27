@@ -1,0 +1,43 @@
+NAME
+    emdtohtml - um aplicativo parar gerar páginas HTML a partir da leitura de um ficheiro CSV
+
+SYNOPSIS
+    emdtohtml [emdtohtml options] input_file
+    emdtohtml -o <output_dir> <input_file>
+    emdtohtml -d ...
+    emdtohtml -g ...
+    emdtohtml -i ...
+    emdtohtml -r ...
+    emdtohtml -f ...
+    emdtohtml -l ...
+    emdtohtml -m ...
+
+DESCRIPTION
+    emdtohtml é um aplicativo que permite gerar páginas html a partir de um ficheiro CSV, separado por vírgulas.
+    Permite um conjunto de opções, nomeadamente escolher os tipos de páginas a gerar:
+
+    -d          datas extremas
+    -g          por género
+    -i          por idade e género
+    -r          por resultado do teste (aptos/ não aptos)
+    -f          percentagem federados
+    -l          por morada
+    -m          por modalidade
+    -o <dir>    Define o local onde vai ser gerado o output (páginas html)
+
+    Por defeito, a diretoria de output é 'www' e gera todos os filtros.
+
+    Por forma a permitir a utilização de pipelines, é utilizado a leitura a partir do stdin.
+    Caso seja indicado um ficheiro de leitura, o stdin é imediatamente redirecionado para apontar para este ficheiro.
+
+EXAMPLES
+    emdtohtml emd.csv
+        modo default: gera todos os filtros para a diretoria 'www'
+
+    emdtohtml -o www2 emd.csv
+        gera todos os filtros para a diretoria 'www2'
+    
+    emdtohtml -d emd.csv
+        gera apenas o filtro das datas extremas
+    
+    cat emd.csv | emdtohtml [options]

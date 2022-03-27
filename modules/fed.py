@@ -2,11 +2,13 @@ import re
 from datetime import datetime
 from modules.athl import*
 from templates import load_templates, template
-from modules.globals import create_folder_output, output
+from modules.globals import create_folder_output, get_output
 
 distPorFed = {}
 
-def read_Fed(j : Jogador, data : datetime, federado : str):
+def read_Fed(j : Jogador):
+    data = j.date
+    federado = j.federado
     if not distPorFed.__contains__(data.year):
         distPorFed[data.year] = {"Fed": [], "NFed": []}
     fed = federado == "true"
@@ -17,7 +19,7 @@ def read_Fed(j : Jogador, data : datetime, federado : str):
         distPorFed[data.year]["NFed"].append(j.id)
 
 def generate_fed(jogadores):
-    global output
+    output = get_output()
     file_name = 'federado'
     create_folder_output(file_name)
     
@@ -35,9 +37,9 @@ def generate_fed(jogadores):
         new_ano = {'ano': ano}
 
         new_ano['ano'] = ano
-        new_ano['FedRef'] = f'{output}/{file_name}/fed_{ano}.html'
+        new_ano['FedRef'] = f'{file_name}/fed_{ano}.html'
         new_ano['Federado'] = len(distPorFed[ano]["Fed"])
-        new_ano['NFedRef'] = f'{output}/{file_name}/naoFed_{ano}.html'
+        new_ano['NFedRef'] = f'{file_name}/naoFed_{ano}.html'
         new_ano['NaoFederado'] = len(distPorFed[ano]["NFed"])
 
         cont['federados'].append(new_ano)

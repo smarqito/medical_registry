@@ -8,15 +8,14 @@
     integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
   <title> Modalidades por ano</title>
 </head>
-<h2>Modalidades por ano</h2>
-<table class="tg">
-  <thead>
-    <tr>
-      <th class="tg-0pky">Modalidade</th>
-      {{ano_colunas, anos_header}}
-    </tr>
-  </thead>
-  <tbody>
-    {{row, rows}}
-  </tbody>
-</table>
+<h2></h2>
+<div class="p-3 mb-2 bg-primary text-white">
+  <h2><a href="modalidade.html" class="link-light">Modalidades por ano</a></h2>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col"><b>Modalidade</b></div>
+    {{ano_colunas, anos_header}}
+  </div>
+  {{row, rows}}
+</div>

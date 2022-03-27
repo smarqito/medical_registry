@@ -1,9 +1,10 @@
 from modules.athl import *
-from modules.globals import create_folder_output, output
+from modules.globals import create_folder_output, get_output
 distPorMorada = {}
 
 
-def read_Morada(j: Jogador, morada: str) -> dict:
+def read_Morada(j: Jogador) -> dict:
+    morada = j.morada
     if not distPorMorada.__contains__(morada):
         distPorMorada[morada] = []
     distPorMorada[morada].append(j.id)
@@ -11,7 +12,7 @@ def read_Morada(j: Jogador, morada: str) -> dict:
 
 
 def generate_DistMoradas(jogadores):
-    global output
+    output = get_output()
     file_name = 'moradas'
     create_folder_output(file_name)
     cont = {}
@@ -22,7 +23,7 @@ def generate_DistMoradas(jogadores):
                        f"{output}/{file_name}/{morada}.html")
 
         new_morada = {'Morada': morada}
-        new_morada['MoradoresRef'] = f'"moradas/{morada}.html"'
+        new_morada['MoradoresRef'] = f'"{file_name}/{morada}.html"'
         new_morada['Moradores'] = len(distPorMorada[morada])
         cont["rows"].append(new_morada)
 
