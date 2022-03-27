@@ -9,10 +9,9 @@ from modules.idade import generate_IdadeGen, read_Idade
 from modules.genero import generate_DistGen, read_Gen
 from modules.fed import generate_fed, read_Fed
 from modules.jogador import *
-from modules.globals import create_folder, output
+from modules.globals import *
+import sys
 
-f = open("assets/emd.csv")
-inde = open("index.html", "w")
 
 reg = r'(?P<id>\w+),(?P<index>\d+),(?P<date>\d{4}-\d{2}-\d{2}),(?P<primeiro>\w+),(?P<ultimo>\w+),(?P<idade>\d+),(?P<genero>[MF]),(?P<morada>\w+),(?P<modalidade>\w+),(?P<clube>\w+),(?P<email>.*?),(?P<federado>\w+),(?P<resultado>\w+)'
 
@@ -20,10 +19,10 @@ reg = r'(?P<id>\w+),(?P<index>\d+),(?P<date>\d{4}-\d{2}-\d{2}),(?P<primeiro>\w+)
 jogadores = {}
 
 def reader():
-    global output
+    handle_args()
+    output = get_output()
     create_folder(output)
-    for l in f.readlines():
-
+    while l := sys.stdin.readline():
         m = match(reg, l)
         if m:
             data = datetime.strptime(m.group("date"), '%Y-%m-%d').date()
@@ -31,7 +30,7 @@ def reader():
             jogadores[j.id] = j
             gd = m.groupdict()
             # gera o atleta, individual
-            index[''] = generate_athelete(gd)
+            generate_athelete(gd)
 
             # Datas Extremas
             read_dates(j, data)
@@ -69,7 +68,6 @@ def reader():
     index['federados'] = generate_fed(jogadores)
     index['moradas'] = generate_DistMoradas(jogadores)
     index['modalidades'] = generate_DistMod(jogadores)
-    f.close()
 
 
 reader()

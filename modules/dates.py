@@ -1,7 +1,7 @@
 from datetime import datetime
 from modules.athl import *
 from templates import *
-from modules.globals import create_folder_output, output
+from modules.globals import create_folder_output, get_output
 
 distPorDate = {}
 
@@ -23,7 +23,7 @@ def read_dates(j: Jogador, data: datetime):
         distPorDate["Max"].append(j.id)
 
 def generate_dates(jogadores):
-    global output
+    output = get_output()
     file_name = 'datas_extremas'
     create_folder_output(file_name)
     

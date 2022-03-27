@@ -1,5 +1,5 @@
 from modules.athl import *
-from modules.globals import create_folder_output, output
+from modules.globals import create_folder_output, get_output
 
 
 distPorIdade = {"MaisOuIgual35": {"M": [], "F": []},
@@ -13,7 +13,7 @@ def read_Idade(j : Jogador, idade : int, genero : str) -> dict:
     return distPorIdade
 
 def generate_IdadeGen(jogadores):
-    global output
+    output = get_output()
     file_name = 'idade'
     create_folder_output(file_name)
 

@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 import templates
 from modules.jogador import *
-from modules.globals import create_folder_output, output
+from modules.globals import create_folder_output, get_output
 
 def generate_athelete(gd : dict):
-    global output
+    output = get_output()
     file_name = 'athlete'
     create_folder_output(file_name)
     cont = {}

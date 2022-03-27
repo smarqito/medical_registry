@@ -1,6 +1,6 @@
 from modules.athl import *
 from datetime import datetime
-from modules.globals import create_folder_output, output
+from modules.globals import create_folder_output, get_output
 distPorGen = {}
 
 
@@ -12,7 +12,7 @@ def read_Gen(j: Jogador, data: datetime, gen: str):
 
 
 def generate_DistGen(jogadores):
-    global output
+    output = get_output()
     file_name = 'genero'
     create_folder_output(file_name)
     cont = {}
