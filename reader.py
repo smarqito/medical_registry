@@ -62,7 +62,7 @@ def reader():
     generate_Resultados(jogadores, inde)
     generate_fed(jogadores, inde)
     generate_DistMoradas(jogadores, inde)
-    #generate_DistMod(distPorMod)
+    generate_DistMod(jogadores, inde)
     inde.close()
     f.close()
 

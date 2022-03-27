@@ -15,7 +15,7 @@ def read_Mod(j : Jogador, data : datetime, mod : str):
         modalidades.append(mod)
 
         
-def generate_DistMod():
+def generate_DistMod(jogadores, inde):
     '''
     _modalidades: { ano: { modalidade: [ids_jog] } }
     '''
@@ -38,10 +38,10 @@ def generate_DistMod():
 
             if (l != 0):
                 generate_Index(
-                    distPorMod[ano][mod], "www/modalidade/{}_{}.html".format(mod, ano))
+                    distPorMod[ano][mod], jogadores, "www/modalidade/{}_{}.html".format(mod, ano))
 
             new_ano['total'] = l
-            new_ano['ref'] = f'modalidade/{mod}_{ano}.html'
+            new_ano['ref'] = f'www/modalidade/{mod}_{ano}.html'
             temp['colls'].append(new_ano)
         cont['rows'].append(temp)
     '''
@@ -65,7 +65,7 @@ def generate_DistMod():
                                          'main': 'index.html'
                                      })
 
-    w = open("www/modalidades.html", "w")
+    #w = open("www/modalidades.html", "w")
     res = templates.template(cont, "main", temps)
-    w.write(res)
-    w.close()
+    inde.write(res)
+    #w.close()
