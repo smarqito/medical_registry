@@ -48,7 +48,7 @@ def reader():
             read_Gen(j)
 
             # Idade
-            read_Idade(j, int(m.group("idade")), m.group("genero"))
+            read_Idade(j)
 
             # Morada
             read_Morada(j, m.group("morada"))

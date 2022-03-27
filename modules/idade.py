@@ -5,7 +5,9 @@ from modules.globals import create_folder_output, get_output
 distPorIdade = {"MaisOuIgual35": {"M": [], "F": []},
                 "Menos35": {"M": [], "F": []}}
 
-def read_Idade(j : Jogador, idade : int, genero : str) -> dict:
+def read_Idade(j : Jogador) -> dict:
+    idade = int(j.idade)
+    genero = j.genero
     if idade >= 35:
         distPorIdade["MaisOuIgual35"][genero].append(j.id)
     else:
