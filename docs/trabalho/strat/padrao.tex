@@ -2,7 +2,7 @@ De maneira a conseguir capturar todas os valores existentes em cada linha do fic
 do ficheiro csv, foi analisado o padrão existente e a partir deste especificada uma expressão regular 
 capaz de os agrupar.
 
-\begin{minted}[breaklines]{python}
+\begin{minted}[breaklines]{bash}
     (?P<id>\w+),(?P<index>\d+),(?P<date>\d{4}-\d{2}-\d{2}),(?P<primeiro>\w+),
     (?P<ultimo>\w+),(?P<idade>\d+),(?P<genero>[MF]),(?P<morada>\w+),(?P<modalidade>\w+),
     (?P<clube>\w+),(?P<email>.*?),(?P<federado>[true|false]),(?P<resultado>[true|false])
