@@ -9,7 +9,7 @@ chavetas:
 <!DOCTYPE html>
 <html>
     ...
-    {{PARÂMETRO_A_INSERIR}}
+    {{CHAVE_PARÂMETRO}}
     ...
 </html>
 \end{minted}
@@ -25,13 +25,13 @@ Neste caso, especifica-se na \textit{tag} o ficheiro \textit{HTML} correspondent
 <html>
     ...HTML_PRINCIPAL...
 
-    {{SUB_TEMPLATE, PARÂMETRO_A_INSERIR}}
+    {{SUB_TEMPLATE, CHAVE_PARÂMETRO}}
 
     ...HTML_PRINCIPAL...
 </html>
 \end{minted}
 
-\dots o que permite a inserção no \textit{HTML_PRINCIPAL} de N elementos, com o formato definido em \textit{SUB_TEMPLATE}.
+\dots o que permite a inserção no \textit{HTML\_PRINCIPAL} de N elementos, com o formato definido em \textit{SUB\_TEMPLATE}.
 Deste modo, empurra-se a responsabilidade de criar a estrutura de cada elemento para um ficheiro \textit{HTML} auxiliar.
 
 Como todos os módulos seguem este processo, foi procurado um método que permitiria generalizar o método como os \textit{templates} são populados.
@@ -39,7 +39,7 @@ No âmbito desta abstração adicional, foi criado o ficheiro \textit{templates.
 
 Neste sentido, haverá funções como:
 \begin{itemize}
-    \item[\textit{load_templates}]Para criar um dicionário a partir do \textit{template}.
+    \item[\textit{load\_templates}]Para criar um dicionário a partir do \textit{template}.
     \item[\textit{template}]Para criar uma string com a informação nos dicionários, correspondente a um ficheiro \textit{HTML}.
 \end{itemize}
 

@@ -10,9 +10,35 @@ para a sua página pessoal de informações.
 Todos os parâmetro calculados e respetivas informações que o permitiram calcular, especificamente o 
 \textit{path} para a página dos nomes dos atletas, são armazenados e passados ao módulo template.
 
-Módulo template ... 
+\textbf{Módulo} \textit{Template}
 
-Classe jogador ...
+Por forma a tornar a aplicação mais escalável e fácil de manter, optou-se por criar um módulo de \textit{templating}.
+Apesar de existir várias ferramentas para o efeito, atendendo ao cariz de aprendizagem inerente ao contexto de desenvolvimento
+do presente projeto, optou-se por desenvolver este pequeno módulo de raíz.
+Para tal, recorreu-se ao módulo \textit{re} do \textit{Pyhon}.
+
+A estratégia desenvolvida foi orientada ao template,
+i.e. apenas será apresentado informação para a qual exista uma variável alocada para a mesma no template.
+Assume-se objetos do tipo $list$ ou $dict$. Permite, ainda, a utilização de subtemplates.
+
+Assim, foram utilizadas duas \textit{labels}:
+\begin{itemize}
+    \item[{{chave}}]{Através da chave é acedido ao valor da variável.}
+    \item[{{template, chave}}]{Vai aplicar a template (outro ficheiro html) à chave do dicionário\\
+    Pode, ainda, ser utilizado sobre listas. Nesse caso, vai aplicar a template N vezes no valor da chave.}
+\end{itemize}
+
+A partir das \textit{labels} definidas, começa-se por iterar os templates procurando por cada tipo (chave ou template).
+De forma recursiva, vai-se entrando na estrutura até se chegar à chave que alberga o valor, tratando-se de efetuar \textbf{sub}
+da label por este.
+
+Conforme referido, esta estratégia é implementada de forma recursiva, pelo que se consegue aninhamento sem limite de níveis.
+Apesar de se ter conseguido um bom resultado, este módulo tem algumas limitações. Estas, poderiam ser ultrapassadas através da utilização de contextos.
+
+
+A classe \textbf{Jogador} armazena todos os parâmetros lidos numa linha do ficheiro csv. Foi ainda criado um dicionário
+que armazena todos os jogadores em que a chave é o id, que é utilizado para gerar as referências na página \textit{html} com 
+a lista de nomes dos atletas
 
 O módulo globals é o responsável pela geração das pastas onde é colocado o \textit{output} do pograma
 consoante os argumentos de inicalização recebidos. A pasta de \textit{output} gera tantas pastas como 

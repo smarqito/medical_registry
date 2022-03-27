@@ -1,6 +1,6 @@
 \subsubsection{Argumentos de inicialização}
 
-Quando se inicializa o pograma é possível passar argumentos que indicam o tipo de 
+Quando se inicializa o programa é possível passar argumentos que indicam o tipo de 
 indicadores a serem criados e também a pasta onde será guardado o \textit{output}:
 \begin{itemize}
     \item [-o]{Pasta de output}
@@ -14,11 +14,29 @@ indicadores a serem criados e também a pasta onde será guardado o \textit{outp
 \end{itemize}
 
 Caso não sejam passados nenhuns argumentos referentes aos indicadores são
-gerados todos por defeito. A pasta de \textit{output} é a www quando não
+gerados todos por defeito. A pasta de \textit{output} é a \textit{www} quando não
 especificada.
+
+Contudo, para poder fornecer ao utilizador todas as ferramentas para a execução do programa sem conhecimento prévio, 
+foi criado um \textbf{manual}, escrito pelo grupo, para informar de todas as funcionalidades da aplicação.
+Com o comando:
+\begin{minted}{bash}
+    python3 emdtohtml.py --help
+\end{minted}
+
+\dots será apresentado ao utilizador o manual de ajuda.
+
+\inputminted{bash}{manual.txt}
+
+\subsubsection{Redirecionamento do STDIN}
+
+O aplicativo permite utilizar o \textit{stdin} para efetuar a leitura das linhas a serem analisadas.
+Assim, caso o utilizador não indique um ficheiro de leitura, o programa ficará a aguardar pela entrada no \textbf{stdin}.
+Esta estratégia permite, no entanto, a utilização de pipelines.
 
 \subsubsection{Resultados obtidos}
 
 O \textit{dataset} \textbf{emd.csv} disponiblizado pelos professores na \textit{Blackboard}
 foi utilizado como ficheiro de teste. A página \textbf{index.html} criada com todos os indicadores
-estatísticos foi a seguinte:
+estatísticos encontra-se nos anexos(ver \ref{anexos}).
+
