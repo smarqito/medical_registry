@@ -44,7 +44,7 @@ def generate_DistMod(jogadores):
                     distPorMod[ano][mod], jogadores, f"{output}/{file_name}/{mod}_{ano}.html")
 
             new_ano['total'] = l
-            new_ano['ref'] = f'modalidade/{mod}_{ano}.html'
+            new_ano['ref'] = f'www/modalidade/{mod}_{ano}.html'
             temp['colls'].append(new_ano)
         cont['rows'].append(temp)
     '''
