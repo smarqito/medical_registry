@@ -1,33 +1,33 @@
 from athl import *
 from datetime import datetime
 
-def read_Gen(j : Jogador, data : datetime, gen : str) -> dict:
-    distPorGen = {}
+distPorGen = {}
+
+def read_Gen(j : Jogador, data : datetime, gen : str):
     if not distPorGen.__contains__(data.year):
         distPorGen[data.year] = {"M": [], "F": []}
 
     distPorGen[data.year][gen].append(j.id)
-    return distPorGen
 
-def generate_DistGen(lista_anos, jogadores, inde):
+def generate_DistGen(jogadores, inde):
     cont = {}
     cont['rows'] = []
-    for membro in sorted(lista_anos):
+    for membro in sorted(distPorGen):
         # Ref Masculino
-        generate_Index(lista_anos[membro]["M"], jogadores,
+        generate_Index(distPorGen[membro]["M"], jogadores,
                        "www/genero/masc_{}.html".format(membro))
 
         # Ref Femenino
-        generate_Index(lista_anos[membro]["F"], jogadores,
+        generate_Index(distPorGen[membro]["F"], jogadores,
                        "www/genero/fem_{}.html".format(membro))
 
         new_ano = {'ano': membro}
         new_ano['refM'] = '"masc_{}.html"'.format(membro)
         new_ano['refF'] = '"fem_{}.html"'.format(membro)
-        new_ano['TotalM'] = len(lista_anos[membro]["M"])
-        new_ano['TotalF'] = len(lista_anos[membro]["F"])
+        new_ano['TotalM'] = len(distPorGen[membro]["M"])
+        new_ano['TotalF'] = len(distPorGen[membro]["F"])
         new_ano['Total'] = len(
-            lista_anos[membro]["M"]) + len(lista_anos[membro]["F"])
+            distPorGen[membro]["M"]) + len(distPorGen[membro]["F"])
         cont["rows"].append(new_ano)
 
     temps = templates.load_templates('template/genero/',

@@ -1,12 +1,27 @@
+from datetime import datetime
+from typing import Tuple
 from athl import *
 
-def generate_DistMod(_modalidades: dict):
+distPorMod = {}
+modalidades = []
+
+def read_Mod(j : Jogador, data : datetime, mod : str):
+    if not distPorMod.__contains__(data.year):
+        distPorMod[data.year] = {}
+    if not distPorMod[data.year].__contains__(mod):
+        distPorMod[data.year][mod] = []
+    distPorMod[data.year][mod].append(j.id)
+    if not modalidades.__contains__(mod):
+        modalidades.append(mod)
+
+        
+def generate_DistMod():
     '''
     _modalidades: { ano: { modalidade: [ids_jog] } }
     '''
     cont = {}  # conteudo html
     cont['anos_header'] = []
-    for ano in sorted(_modalidades):
+    for ano in sorted(distPorMod):
         cont['anos_header'].append(ano)
 
     cont['rows'] = []
@@ -14,16 +29,16 @@ def generate_DistMod(_modalidades: dict):
     for mod in sorted(modalidades):
         temp = {'mod': mod}
         temp['colls'] = []
-        for ano in sorted(_modalidades):
+        for ano in sorted(distPorMod):
             new_ano = {'ano': ano}
-            if not _modalidades[ano].__contains__(mod):
+            if not distPorMod[ano].__contains__(mod):
                 l = 0
             else:
-                l = len(_modalidades[ano][mod])
+                l = len(distPorMod[ano][mod])
 
             if (l != 0):
                 generate_Index(
-                    _modalidades[ano][mod], "www/modalidade/{}_{}.html".format(mod, ano))
+                    distPorMod[ano][mod], "www/modalidade/{}_{}.html".format(mod, ano))
 
             new_ano['total'] = l
             new_ano['ref'] = f'modalidade/{mod}_{ano}.html'

@@ -1,25 +1,25 @@
 from athl import *
 
+distPorMorada = {}
+
 def read_Morada(j :Jogador, morada : str) -> dict:
-    distPorMorada = {}
     if not distPorMorada.__contains__(morada):
         distPorMorada[morada] = []
     distPorMorada[morada].append(j.id)
     return distPorMorada
 
-def generate_DistMoradas(lista_moradas, jogadores, inde):
-    #w = open("moradas.html", "w")
+def generate_DistMoradas(jogadores, inde):
 
     cont = {}
     cont['rows'] = []
-    for morada in sorted(lista_moradas):
+    for morada in sorted(distPorMorada):
         # Ref moradores
-        generate_Index(lista_moradas[morada], jogadores,
+        generate_Index(distPorMorada[morada], jogadores,
                        "www/locais/local_{}.html".format(morada))
 
         new_morada = {'Morada': morada}
         new_morada['MoradoresRef'] = 'local_{}.html"'.format(morada)
-        new_morada['Moradores'] = len(lista_moradas[morada])
+        new_morada['Moradores'] = len(distPorMorada[morada])
         cont["rows"].append(new_morada)
 
     temps = templates.load_templates('template/moradas/',
@@ -29,5 +29,6 @@ def generate_DistMoradas(lista_moradas, jogadores, inde):
                                      })
 
     res = templates.template(cont, "main", temps)
+    #w = open("moradas.html", "w")
     inde.write(res)
     #w.close

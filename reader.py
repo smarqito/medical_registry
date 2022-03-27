@@ -1,10 +1,12 @@
 from datetime import datetime
 from re import *
-from mod import generate_DistMod
+from dates import generate_dates, read_dates
+from mod import generate_DistMod, read_Mod
 from moradas import generate_DistMoradas, read_Morada
 from resultados import generate_Resultados, read_Resultados
 from idade import generate_IdadeGen, read_Idade
 from genero import generate_DistGen, read_Gen
+from fed import generate_fed, read_Fed
 from jogador import *
 
 
@@ -15,12 +17,6 @@ reg = r'(?P<id>\w+),(?P<index>\d+),(?P<date>\d{4}-\d{2}-\d{2}),(?P<primeiro>\w+)
 
 
 jogadores = {}
-distPorGen = {}
-distPorIdade = {}
-resultados = {}
-distPorMorada = {}
-distPorMod = {}
-modalidades = []
 
 def reader():
     #inde = open("index.html", "w")
@@ -40,35 +36,35 @@ def reader():
             # nathl = open(f'athlete/{gd["id"]}.html', 'w')
             # nathl.write(templat)
 
+            # Datas Extremas
+            #read_dates(j, data)
+
             # Género
-            distPorGen = read_Gen(j, data, m.group("genero"))
+            read_Gen(j, data, m.group("genero"))
 
             # Idade
-            distPorIdade = read_Idade(j, int(m.group("idade")), m.group("genero"))
+            read_Idade(j, int(m.group("idade")), m.group("genero"))
 
             # Morada
-            distPorMorada = read_Morada(j, m.group("morada"))
+            read_Morada(j, m.group("morada"))
             
-
             # Resultados
-            resultados = read_Resultados(j, data, m.group("resultado"))
+            read_Resultados(j, data, m.group("resultado"))
+
+            #Federados
+            read_Fed(j, data, m.group("federado"))
 
             # Modalidade
-            if not distPorMod.__contains__(data.year):
-                distPorMod[data.year] = {}
-            if not distPorMod[data.year].__contains__(m.group("modalidade")):
-                distPorMod[data.year][m.group("modalidade")] = []
-            distPorMod[data.year][m.group("modalidade")].append(j.id)
-
-            if not modalidades.__contains__(m.group("modalidade")):
-                modalidades.append(m.group("modalidade"))
+            read_Mod(j, data, m.group("modalidade"))
 
         templ.close()
 
-    generate_DistGen(distPorGen, jogadores, inde)
-    generate_IdadeGen(distPorIdade, jogadores, inde)
-    generate_Resultados(resultados, jogadores, inde)
-    generate_DistMoradas(distPorMorada, jogadores, inde)
+    #generate_dates(jogadores, inde)
+    generate_DistGen(jogadores, inde)
+    generate_IdadeGen(jogadores, inde)
+    generate_Resultados(jogadores, inde)
+    generate_fed(jogadores, inde)
+    generate_DistMoradas(jogadores, inde)
     #generate_DistMod(distPorMod)
     inde.close()
     f.close()
