@@ -17,14 +17,31 @@ reg = r'(?P<id>\w+),(?P<index>\d+),(?P<date>\d{4}-\d{2}-\d{2}),(?P<primeiro>\w+)
 jogadores = {}
 
 generate = {
-    'd' : generate_dates,
-    'g' : generate_DistGen,
-    'i' : generate_IdadeGen,
-    'r' : generate_Resultados,
-    'f' : generate_fed,
-    'l' : generate_DistMoradas,
-    'm' : generate_DistMod
+    'd': generate_dates,
+    'g': generate_DistGen,
+    'i': generate_IdadeGen,
+    'r': generate_Resultados,
+    'f': generate_fed,
+    'l': generate_DistMoradas,
+    'm': generate_DistMod
 }
+read = {
+    # Datas Extremas
+    'd': read_dates,
+    # Género
+    'g': read_Gen,
+    # Idade
+    'i': read_Idade,
+    # Resultados
+    'r': read_Resultados,
+    # Federados
+    'f': read_Fed,
+    # Morada
+    'l': read_Morada,
+    # Modalidade
+    'm': read_Mod
+}
+
 
 def reader():
     handle_args()
@@ -34,48 +51,30 @@ def reader():
     while l := sys.stdin.readline():
         m = match(reg, l)
         if m:
-            data = datetime.strptime(m.group("date"), '%Y-%m-%d').date()
             j = Jogador(m)
             jogadores[j.id] = j
 
             # gera o atleta, individual
             generate_athelete(j)
 
-            # Datas Extremas
-            read_dates(j)
-
-            # Género
-            read_Gen(j)
-
-            # Idade
-            read_Idade(j)
-
-            # Morada
-            read_Morada(j)
-
-            # Resultados
-            read_Resultados(j)
-
-            # Federados
-            read_Fed(j)
-
-            # Modalidade
-            read_Mod(j)
-    
-    #falta ordenar
+            for opt in opts:
+                if opts[opt]:
+                    read[opt](j)
+    # falta ordenar
     generate_Index(jogadores.keys(), jogadores, f'{output}/athletes.html')
-    
+
     index = {
-        'd' : 'Não gerado',
-        'g' : 'Não gerado',
-        'i' : 'Não gerado',
-        'r' : 'Não gerado',
-        'f' : 'Não gerado',
-        'l' : 'Não gerado',
-        'm' : 'Não gerado',
+        'd': 'Não gerado',
+        'g': 'Não gerado',
+        'i': 'Não gerado',
+        'r': 'Não gerado',
+        'f': 'Não gerado',
+        'l': 'Não gerado',
+        'm': 'Não gerado',
     }
     for opt in opts:
         if opts[opt]:
             index[opt] = generate[opt](jogadores)
+
 
 reader()
