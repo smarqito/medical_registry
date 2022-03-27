@@ -29,16 +29,16 @@ def generate_IdadeGen(jogadores, inde):
 
     # Substituções das tags do template
     cont = {}
-    cont['Mais35refM'] = '"mais35Masc.html"'
+    cont['Mais35refM'] = '"www/idade/mais35Masc.html"'
     cont['Mais35TotalM'] = len(distPorIdade["MaisOuIgual35"]["M"])
-    cont['Mais35refF'] = '"mais35Fem.html"'
+    cont['Mais35refF'] = '"www/idade/mais35Fem.html"'
     cont['Mais35TotalF'] = len(distPorIdade["MaisOuIgual35"]["F"])
 
     cont['Mais35Total'] = len(
         distPorIdade["MaisOuIgual35"]["M"]) + len(distPorIdade["MaisOuIgual35"]["F"])
-    cont['Menos35refM'] = 'menos35Masc.html"'
+    cont['Menos35refM'] = 'www/idade/menos35Masc.html"'
     cont['Menos35TotalM'] = len(distPorIdade["Menos35"]["M"])
-    cont['Menos35refF'] = 'menos35Fem.html"'
+    cont['Menos35refF'] = 'www/idade/menos35Fem.html"'
     cont['Menos35TotalF'] = len(distPorIdade["Menos35"]["F"])
     cont['Menos35Total'] = len(
         distPorIdade["Menos35"]["M"]) + len(distPorIdade["Menos35"]["F"])

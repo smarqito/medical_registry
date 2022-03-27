@@ -18,7 +18,7 @@ def generate_DistMoradas(jogadores, inde):
                        "www/locais/local_{}.html".format(morada))
 
         new_morada = {'Morada': morada}
-        new_morada['MoradoresRef'] = 'local_{}.html"'.format(morada)
+        new_morada['MoradoresRef'] = '"www/locais/local_{}.html"'.format(morada)
         new_morada['Moradores'] = len(distPorMorada[morada])
         cont["rows"].append(new_morada)
 

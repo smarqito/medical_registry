@@ -1,5 +1,6 @@
 from datetime import datetime
 from re import *
+from athl import generate_athelete
 from dates import generate_dates, read_dates
 from mod import generate_DistMod, read_Mod
 from moradas import generate_DistMoradas, read_Morada
@@ -29,7 +30,8 @@ def reader():
             data = datetime.strptime(m.group("date"), '%Y-%m-%d').date()
             j = Jogador(m)
             jogadores[j.id] = j
-            # gd = m.groupdict()
+            gd = m.groupdict()
+            generate_athelete(gd)
             # #inde.write(f'<li><a href="athlete/{gd["id"]}.html">{gd["primeiro"]}, {gd["ultimo"]}</a></li>')
             # for k in gd.keys():
             #     templat = sub(rf'{{{{{k}}}}}', gd[k], templat)

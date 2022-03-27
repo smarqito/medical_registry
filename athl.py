@@ -4,6 +4,23 @@ import sys
 import templates
 from jogador import *
 
+def generate_athelete(gd : dict):
+    cont = {}
+    for k in gd.keys():
+        cont[k] = gd[k]
+        #templat = sub(rf'{{{{{k}}}}}', gd[k], templat)
+
+    temps = templates.load_templates('template/',
+                                     {
+                                         'main': 'athlete.html'
+                                     })
+
+    res = templates.template(cont, "main", temps)
+    nathl = open(f'www/athlete/{gd["id"]}.html', 'w')
+    nathl.write(res)
+    nathl.close()
+
+
 def generate_Index(lista, jogadores, filePath):
     cont = {}
     cont['rows'] = []
