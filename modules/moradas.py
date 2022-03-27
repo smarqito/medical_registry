@@ -22,7 +22,7 @@ def generate_DistMoradas(jogadores):
                        f"{output}/{file_name}/{morada}.html")
 
         new_morada = {'Morada': morada}
-        new_morada['MoradoresRef'] = f'"moradas/{morada}.html"'
+        new_morada['MoradoresRef'] = f'"{file_name}/{morada}.html"'
         new_morada['Moradores'] = len(distPorMorada[morada])
         cont["rows"].append(new_morada)
 

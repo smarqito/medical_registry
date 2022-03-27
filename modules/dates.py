@@ -1,4 +1,4 @@
-from datetime import datetime
+# from datetime import datetime
 from modules.athl import *
 from templates import *
 from modules.globals import create_folder_output, get_output
@@ -8,9 +8,10 @@ distPorDate = {}
 dateMin = datetime.max.date()
 dateMax =  datetime.min.date()
 
-def read_dates(j: Jogador, data: datetime):
+def read_dates(j: Jogador):
     global dateMin
     global dateMax
+    data = j.date
     if data < dateMin:
         dateMin = data
         distPorDate["Min"] = [j.id]
@@ -34,9 +35,9 @@ def generate_dates(jogadores):
     generate_Index(distPorDate["Max"], jogadores, f"{output}/{file_name}/dataMax.html")
 
     cont = {}
-    cont['MinRef'] = f'"{output}/{file_name}/dataMin.html"'
+    cont['MinRef'] = f'"{file_name}/dataMin.html"'
     cont['dataMin'] = dateMin
-    cont['MaxRef'] = f'"{output}/{file_name}/dataMax.html"'
+    cont['MaxRef'] = f'"{file_name}/dataMax.html"'
     cont['dataMax'] = dateMax
 
     temps = templates.load_templates(f'template/{file_name}/', {

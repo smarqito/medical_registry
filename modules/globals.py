@@ -8,6 +8,8 @@ input = ''
 
 args_filter = 'o:dgirflm'
 
+opts = {}
+
 def create_folder_output(name):
     global output
     if not os.path.isdir(f'{output}/{name}'):
@@ -22,7 +24,11 @@ def c_output(arg):
     output = arg
 
 def c_type(arg):
-    print("in c_type",arg)
+    opts[arg] = True
+
+def get_opts():
+    global opts
+    return opts
 
 def get_output():
     return output
@@ -38,12 +44,22 @@ opts_handler = {
     '-m': c_type
 }
 
+def mode(bool: bool):
+    for arg in findall(r'\w(?!:)', args_filter):
+        opts[arg] = bool
+
+
 def handle_args():
+    mode(True)
+    '''inicia as opts todas a true'''
     optlist, args = getopt.getopt(sys.argv[1:], args_filter)
     if args:
         sys.stdin = open(args[0], 'r')
     if optlist:
-        
+        '''passa tudo para false e assume a linha de comandos'''
+        for opt,val in optlist:
+            if opt != '-o': 
+                mode(False)
         for opt, val in optlist:
             if val:
                 opts_handler[opt](val)
