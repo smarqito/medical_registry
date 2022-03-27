@@ -71,7 +71,7 @@ def generate_DistMod(jogadores):
                                          'main': 'index.html'
                                      })
 
-    w = open(f"{output}/{file_name}/index.html", "w")
+    w = open(f"{output}/{file_name}.html", "w")
     res = templates.template(cont, "main", temps)
     w.write(res)
     w.close()

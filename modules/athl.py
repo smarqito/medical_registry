@@ -11,7 +11,7 @@ def generate_athelete(j : Jogador):
                                      {
                                          'main': 'athlete.html'
                                      })
-
+    
     res = templates.template(vars(j), "main", temps)
     nathl = open(f'{output}/{file_name}/{j.id}.html', 'w')
     nathl.write(res)

@@ -58,3 +58,4 @@ def generate_IdadeGen(jogadores):
     w = open(f"{output}/{file_name}.html", "w")
     w.write(res)
     w.close
+    return res

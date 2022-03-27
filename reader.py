@@ -76,8 +76,8 @@ def reader():
     for opt in opts:
         if opts[opt]:
             index[opt] = generate[opt](jogadores)
-    
-    temps = templates.load_templates('template/', {'main' : 'index.html'})
+
+    temps = templates.load_templates('template/', {'main': 'index.html'})
     t = templates.template(index, 'main', temps)
     i = open(f'{output}/index.html', 'w')
     i.write(t)

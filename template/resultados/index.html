@@ -1,21 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <title> Percentagem de aptos e não aptos por ano</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+  <title> Percentagem de aptos e não aptos por ano</title>
 </head>
-<h2>Percentagem de aptos e não aptos por ano</h2>
-<table class="tg">
-    <thead>
-      <tr>
-        <th class="tg-0pky">Anos</th>
-        <th class="tg-0pky">Aptos</th>
-        <th class="tg-0pky">Não Aptos</th>
-      </tr>
-    </thead>
-    <tbody>   
-        {{rowResultsTemp, rows}}
-</tbody>
-</table>
+<div class="p-3 mb-2 bg-primary text-white">
+  <h2><a href="resultados.html" class="link-light">Percentagem de aptos e não aptos por ano</a></h2>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col"><b>Anos</b></div>
+    <div class="col"><b>Aptos</b></div>
+    <div class="col"><b>Não Aptos</b></div>
+  </div>
+  {{rowResultsTemp, rows}}
+</div>
