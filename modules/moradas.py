@@ -3,7 +3,8 @@ from modules.globals import create_folder_output, get_output
 distPorMorada = {}
 
 
-def read_Morada(j: Jogador, morada: str) -> dict:
+def read_Morada(j: Jogador) -> dict:
+    morada = j.morada
     if not distPorMorada.__contains__(morada):
         distPorMorada[morada] = []
     distPorMorada[morada].append(j.id)
