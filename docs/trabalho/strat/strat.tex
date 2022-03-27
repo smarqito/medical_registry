@@ -16,11 +16,14 @@ particionado por vários ficheiros.
 Neste sentido, cada \textbf{indicador estatístico} corresponderá ao seu \textbf{módulo}, um programa em \textit{Python} responsável por gerá-lo, sendo uma análise mais aprofundada
 sobre este tópico localizada em \ref{}.
 
-Não obstante os múltíplos programas criados para popular o \textit{index.html}, todo este trabalho irá localizar-se no ficheiro \textit{reader.py}. 
+Não obstante os múltíplos programas criados para popular a página principal, todo este trabalho irá localizar-se no ficheiro \textit{reader.py}. 
 Este irá simultaneamente agregar toda a informação a ser usada para cada indicador e usá-la so chamar os módulos criados, culminando na criação do 
 \textit{index.html} (\ref{}). 
 
 \dots todos os módulos terão por base um ou mais \textit{templates HTML}, sendo que cada indicador tem a sua própria estrutura de apresentação (\ref{subsubsec:templates}).
 
-Com a utilização dos \textit{templates} previamente criados, a solução tenta abstrair a construção dos indicadores através de \textit{templating}.
-Deste modo, permite-se construí-los metodicamente a partir dos \textit{templates} criados, permitindo a adição de novos indicadores sem complicações de construção.
+A solução tenta abstrair a construção dos diversos indicadores, através de \textit{templating} (\ref{subsubsec:templates}).
+Isto é, irá construí-los metodicamente a partir dos \textit{templates} criados, usando a mesma estratégia para todos.
+Deste modo, permite-se a adição de novos indicadores sem complicações de construção e torna-se o código mais \textit{clean} e \textit{readable}.
+
+No final, irá ser criado um \textit{website} cuja página principal engloba \textbf{hiperligações} para todas as páginas dos indicadores respetivos.
