@@ -9,6 +9,7 @@ from modules.genero import generate_DistGen, read_Gen
 from modules.fed import generate_fed, read_Fed
 from modules.jogador import *
 from modules.globals import *
+import templates
 import sys
 
 
@@ -75,6 +76,12 @@ def reader():
     for opt in opts:
         if opts[opt]:
             index[opt] = generate[opt](jogadores)
+    
+    temps = templates.load_templates('template/', {'main' : 'index.html'})
+    t = templates.template(index, 'main', temps)
+    i = open(f'{output}/index.html', 'w')
+    i.write(t)
+    i.close()
 
 
 reader()
