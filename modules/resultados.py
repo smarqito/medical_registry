@@ -5,7 +5,9 @@ from modules.globals import create_folder_output, get_output
 
 resultados = {}
 
-def read_Resultados(j : Jogador, data : datetime, resultado : str) -> dict:
+def read_Resultados(j : Jogador) -> dict:
+    data = j.date
+    resultado = j.resultado
     if not resultados.__contains__(data.year):
                 resultados[data.year] = {"aptos": [], "naoAptos": []}
     res = resultado == "true"

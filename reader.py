@@ -54,7 +54,7 @@ def reader():
             read_Morada(j)
 
             # Resultados
-            read_Resultados(j, data, m.group("resultado"))
+            read_Resultados(j)
 
             # Federados
             read_Fed(j, data, m.group("federado"))
