@@ -5,8 +5,7 @@ Class: Language Processing
 
 + Marco Sousa, https://www.linkedin.com/in/marco-antonio-sousa/
 + José Malheiro
-
-Miguel Fernandes, https://www.linkedin.com/in/miguel-fernandes-26526623a/
++ Miguel Fernandes, https://www.linkedin.com/in/miguel-fernandes-26526623a/
 
 # Grade:
 20/20
