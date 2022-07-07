@@ -9,5 +9,5 @@ José Malheiro
 
 Miguel Fernandes, https://www.linkedin.com/in/miguel-fernandes-26526623a/
 
-#Grade:
+# Grade:
 20/20
