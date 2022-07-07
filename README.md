@@ -3,7 +3,7 @@ Class: Language Processing
 
 # Authors
 
-Marco Sousa, https://www.linkedin.com/in/marco-antonio-sousa/
++ Marco Sousa, https://www.linkedin.com/in/marco-antonio-sousa/
 
 José Malheiro
 
