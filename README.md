@@ -1,7 +1,7 @@
 # Medical Registry
 Class: Language Processing
 
-#Authors
+# Authors
 
 Marco Sousa, https://www.linkedin.com/in/marco-antonio-sousa/
 
